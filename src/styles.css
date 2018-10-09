@@ -121,6 +121,10 @@ svg.healthscore {
     width: 100%;
 }
 
+#viz {
+    min-height: 680px;
+}
+
 @media screen and (max-width: 767px) {
     .col-xs-6 {
         max-width: 50%;

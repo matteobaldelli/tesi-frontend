@@ -60,9 +60,10 @@ export class VisitComponent implements OnInit {
   }
 
   private draw(medicals: Medical[]): void {
+    const container = document.getElementById('viz');
     const opts = {
       // svg container
-      container: document.getElementById('viz'),
+      container: container,
       userdata: {
         hoverevents : true,
         factors: this.hDataService.process(medicals, 'male')
@@ -91,12 +92,11 @@ export class VisitComponent implements OnInit {
     };
     if (this.graph !== undefined) {
       this.graph.destroy();
-
     }
 
     this.graph = new HGraph(opts);
-    this.graph.width = 1024;
-    this.graph.height = 680;
+    this.graph.width = container.offsetWidth;
+    this.graph.height = container.offsetHeight;
     this.graph.initialize();
   }
 
