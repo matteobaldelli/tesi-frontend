@@ -1,0 +1,131 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~font-awesome/css/font-awesome.css';
+@import '/assets/healthGraph.css';
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    background: #4e5463;
+    background: -moz-linear-gradient(top, #4e5463 0%, #3d434f 100%);
+    background: -webkit-linear-gradient(top, #4e5463 0%, #3d434f 100%);
+    background: linear-gradient(to bottom, #4e5463 0%, #3d434f 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4e5463', endColorstr='#3d434f', GradientType=0);
+}
+
+.page-title {
+    text-align: center;
+    margin: 35px 0 20px 0;
+    color: #FFF;
+    text-transform: uppercase;
+    font-weight: 200;
+    font-size: 35px;
+}
+
+.form-control {
+    margin-bottom: 15px;
+}
+
+#main {
+    padding: 0 15px;
+}
+
+.navbar {
+    padding: 30px 0;
+}
+
+.box {
+    background-color: #FFF;
+    box-shadow: 0 0 11px 0 #0000009c;
+    border-radius: 5px;
+    padding: 30px 20px;
+    margin-top: 20px;
+}
+
+ul.list-stats {
+    list-style: none;
+    padding: 0;
+}
+
+ul.list-stats > li {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+ul.list-stats > li .value,
+ul.list-stats > li .btn-add {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    line-height: 55px;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: 700;
+    font-size: 15px;
+    position: relative;
+    margin-bottom: 5px;
+}
+
+ul.list-stats > li .value {
+    border: 3px solid #87ac7c;
+    background-color: #96bf8a;
+    color: #616363;
+}
+
+ul.list-stats > li .btn-add {
+    border: 3px solid #9e4233;
+    background-color: #e35f4a;
+    color: #4c1d15;
+    cursor: pointer;
+}
+
+ul.list-stats > li .value .overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s;
+}
+
+ul.list-stats > li .value:hover .overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+ul.list-stats > li .value .delete {
+    -webkit-appearance: inherit;
+    background-color: transparent;
+    border: none;
+    line-height: normal;
+    color: #FFF;
+    padding: 5px;
+    cursor: pointer;
+}
+
+ul.list-stats > li .metric {
+    display: block;
+    font-weight: 600;
+    font-size: 11px;
+    max-width: 90px;
+    margin: 0 auto;
+}
+
+svg.healthscore {
+    width: 100%;
+}
+
+@media screen and (max-width: 767px) {
+    .col-xs-6 {
+        max-width: 50%;
+    }
+    .col-xs-4 {
+        max-width: 33.333%;
+    }
+}

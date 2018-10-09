@@ -1,0 +1,35 @@
+<h2>Lista visite</h2>
+<ul class="list-group">
+  <li *ngFor="let visit of visits" class="list-group-item">
+    <a routerLink="/visit/{{visit.id}}">
+      {{visit.name}}
+    </a>
+    <button type="button" class="btn btn-danger" (click)="delete(visit)">
+      <i class="fa fa-trash" aria-hidden="true"></i>
+    </button>
+  </li>
+</ul>
+
+<button type="button" class="btn btn-success" (click)="openModal(template)">
+  <i class="fa fa-plus"></i>
+</button>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="newVisit" (ngSubmit)="add()">
+      <div class="form-group">
+        <label for="name">Aggiungi nuova visita</label>
+        <input type="text" class="form-control" id="name" formControlName="name">
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="!newVisit.valid">
+        <i class="fa fa-plus"></i>
+      </button>
+    </form>
+  </div>
+</ng-template>
