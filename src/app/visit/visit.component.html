@@ -1,13 +1,5 @@
 <section id="main">
-    <p *ngIf="visit">
-    <h1 class="page-title">Dettaglio {{visit.name}}</h1>
-
-    <!--<ul class="list-group">-->
-    <!--<li *ngFor="let medical of medicals" class="list-group-item">-->
-    <!--<span>{{medical.metric}}: {{medical.value}}</span>-->
-    <!--</li>-->
-    <!--</ul>-->
-
+    <h1 class="page-title" *ngIf="visit">Dettaglio {{visit.name}}</h1>
     <div class="row">
         <div class="col-lg-3">
             <div class="box">
