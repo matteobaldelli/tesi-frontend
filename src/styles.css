@@ -123,6 +123,7 @@ svg.healthscore {
 
 #viz {
     min-height: 680px;
+    overflow: scroll;
 }
 
 @media screen and (max-width: 767px) {
