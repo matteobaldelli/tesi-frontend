@@ -14,7 +14,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class VisitService {
-  private url = environment.api_url + 'visit/';
+  private url = environment.api_url + 'visit';
 
   constructor(
     private messageService: MessageService,
@@ -33,14 +33,14 @@ export class VisitService {
   }
 
   getVisit(id: number): Observable<Visit> {
-    return this.http.get<Visit>(this.url + id).pipe(
+    return this.http.get<Visit>(this.url + '/' + id).pipe(
       tap(_ => this.log(`fetched visit id=${id}`)),
       catchError(this.handleError<Visit>(`getVisit id=${id}`))
     );
   }
 
   updateVisit(visit: Visit): Observable<any> {
-    return this.http.put(this.url + visit.id, visit, httpOptions).pipe(
+    return this.http.put(this.url + '/' + visit.id, visit, httpOptions).pipe(
       tap(_ => this.log(`updated visit id=${visit.id}`)),
       catchError(this.handleError<any>('updateVisit'))
     );
@@ -55,7 +55,7 @@ export class VisitService {
 
   deleteVisit(visit: Visit | number): Observable<Visit> {
     const id = typeof visit === 'number' ? visit : visit.id;
-    return this.http.delete<Visit>(this.url + id, httpOptions).pipe(
+    return this.http.delete<Visit>(this.url + '/' + id, httpOptions).pipe(
       tap(_ => this.log(`deleted visit id=${id}`)),
       catchError(this.handleError<Visit>('deleteVisit'))
     );

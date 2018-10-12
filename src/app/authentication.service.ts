@@ -7,17 +7,17 @@ import { environment } from '../environments/environment';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private url = environment.api_url + 'login/';
+  private url = environment.api_url + 'login';
 
   constructor(private http: HttpClient) { }
 
   login(params: Object) {
       return this.http.post<Object>(this.url, params)
           .pipe(map(user => {
-              // login successful if there's a jwt token in the response
-              if (user && user['token']) {
+              if (user && user['access_token']) {
                   // store user details and jwt token in local storage to keep user logged in between page refreshes
-                  localStorage.setItem('currentUser', JSON.stringify(user));
+                  // localStorage.setItem('currentUser', JSON.stringify(user));
+                  localStorage.setItem('access_token', user['access_token']);
               }
 
               return user;
@@ -25,7 +25,6 @@ export class AuthenticationService {
   }
 
   logout() {
-      // remove user from local storage to log user out
-      localStorage.removeItem('currentUser');
+      localStorage.removeItem('access_token');
   }
 }
