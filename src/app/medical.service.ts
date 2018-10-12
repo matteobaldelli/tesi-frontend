@@ -14,7 +14,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class MedicalService {
-  private url = environment.api_url + 'medical/';
+  private url = environment.api_url + 'medical';
 
   constructor(
     private messageService: MessageService,
@@ -26,29 +26,11 @@ export class MedicalService {
   }
 
   getMedicals(params: HttpParams): Observable<Medical[]> {
-    // let params = new HttpParams();
-    // params = params.append('var1', 'pippo');
-    // params = params.append('var2', 'pluto');
-    // return this.http.get<Medical[]>(this.url + '&visit_id=1', {params: params}).pipe(
     return this.http.get<Medical[]>(this.url, {params: params}).pipe(
       tap(medicals => this.log('fetched visits')),
       catchError(this.handleError('getMedicals', []))
     );
   }
-
-  // getVisit(id: number): Observable<Visit> {
-  //   return this.http.get<Visit>(this.url + 'visit/' + id).pipe(
-  //     tap(_ => this.log(`fetched visit id=${id}`)),
-  //     catchError(this.handleError<Visit>(`getVisit id=${id}`))
-  //   );
-  // }
-  //
-  // updateVisit(visit: Visit): Observable<any> {
-  //   return this.http.put(this.url + 'visit/' + visit.id, visit, httpOptions).pipe(
-  //     tap(_ => this.log(`updated visit id=${visit.id}`)),
-  //     catchError(this.handleError<any>('updateVisit'))
-  //   );
-  // }
 
   addMedical(medical: Medical): Observable<Medical> {
     return this.http.post<Medical>(this.url, medical, httpOptions).pipe(
@@ -59,7 +41,7 @@ export class MedicalService {
 
   deleteMedical(medical: Medical | number): Observable<Medical> {
     const id = typeof medical === 'number' ? medical : medical.id;
-    return this.http.delete<Medical>(this.url + id, httpOptions).pipe(
+    return this.http.delete<Medical>(this.url + '/' + id, httpOptions).pipe(
       tap(_ => this.log(`deleted medical id=${id}`)),
       catchError(this.handleError<Medical>('deleteMedical'))
     );

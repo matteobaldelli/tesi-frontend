@@ -121,8 +121,8 @@ export class VisitComponent implements OnInit {
       visit_id: this.visit.id
     } as Medical;
     this.medicalService.addMedical(medical).subscribe(
-      visit => {
-        this.medicals.push(medical);
+      newMedical => {
+        this.medicals.push(newMedical);
         this.draw(this.medicals);
       },
       error => {},
