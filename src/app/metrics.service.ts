@@ -1,25 +1,40 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { environment } from '../environments/environment';
+import {Metric} from './metric';
+import {Visit} from './visit';
+import { MessageService } from './message.service';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class MetricsService {
-
-  private url = environment.api_url + 'metrics/';
+  private url = environment.api_url + 'metric';
   public listMetrics: string[];
 
   constructor(
+    private messageService: MessageService,
     private http: HttpClient
   ) { }
 
-  getMetrics(): Observable<Object[]> {
-    return this.http.get<Object[]>('/assets/metrics.json').pipe(
-      tap(metrics => this.listMetrics = this.getListMetrics(metrics[0]['metrics'])),
-      catchError(this.handleError('getVisits', []))
+  private log(message: string) {
+    this.messageService.add(`MedicalService: ${message}`);
+  }
+
+  getDataMetrics(): Observable<Object[]> {
+    // return this.http.get<Object[]>('/assets/metrics.json').pipe(
+    //   tap(metrics => this.listMetrics = this.getListMetrics(metrics[0]['metrics'])),
+    //   catchError(this.handleError('getMetricsData', []))
+    // );
+    return this.http.get<Object[]>(this.url + '/data').pipe(
+      tap(metrics => this.listMetrics = this.getListMetrics(metrics)),
+      catchError(this.handleError('getMetricsData', []))
     );
   }
 
@@ -36,6 +51,42 @@ export class MetricsService {
     }
 
     return listMetrics;
+  }
+
+  getMetrics(): Observable<Metric[]> {
+    return this.http.get<Metric[]>(this.url).pipe(
+      tap(metrics => this.log('fetched metrics')),
+      catchError(this.handleError('getMetrics', []))
+    );
+  }
+
+  getMetric(id: number): Observable<Metric> {
+    return this.http.get<Metric>(this.url + '/' + id).pipe(
+      tap(_ => this.log(`fetched visit id=${id}`)),
+      catchError(this.handleError<Metric>(`getMetric id=${id}`))
+    );
+  }
+
+  updateMetric(metric: Metric): Observable<any> {
+    return this.http.put(this.url + '/' + metric.id, metric, httpOptions).pipe(
+      tap(_ => this.log(`updated metric id=${metric.id}`)),
+      catchError(this.handleError<any>('updateMetric'))
+    );
+  }
+
+  addMetric(metric: Metric): Observable<Metric> {
+    return this.http.post<Metric>(this.url, metric, httpOptions).pipe(
+      tap((newVisit: Metric) => this.log(`added metric w/ id=${newVisit.id}`)),
+      catchError(this.handleError<Metric>('addMetric'))
+    );
+  }
+
+  deleteMetric(metric: Metric | number): Observable<Metric> {
+    const id = typeof metric === 'number' ? metric : metric.id;
+    return this.http.delete<Metric>(this.url + '/' + id, httpOptions).pipe(
+      tap(_ => this.log(`deleted metric id=${id}`)),
+      catchError(this.handleError<Metric>('deleteMetric'))
+    );
   }
 
   /**

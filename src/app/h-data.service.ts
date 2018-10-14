@@ -15,13 +15,14 @@ export class HDataService {
   }
 
   public process(data: Object, gender) {
-    const userMetric = this.findMetric(gender);
+    // const userMetric = this.findMetric(gender);
+    const userMetric = this.metrics;
     const userDatapoints = data;
     const dataPoints = [];
 
     // get scores for all metrics
     for (let i = 0; i < userMetric.length; i++) {
-      if (userMetric[i].details) {
+      if (userMetric[i]['details']) {
         const noAtomic = this.scoreNoAtomic(userMetric[i], userDatapoints);
         if (noAtomic !== null) {
           dataPoints.push(noAtomic);
@@ -37,14 +38,14 @@ export class HDataService {
     return dataPoints;
   }
 
-  private findMetric(gender) {
-    for (let i = 0; i < this.metrics.length ; i++) {
-      if (this.metrics[i]['gender'] === gender) {
-        return this.metrics[i]['metrics'];
-      }
-    }
-    return null;
-  }
+  // private findMetric(gender) {
+  //   for (let i = 0; i < this.metrics.length ; i++) {
+  //     if (this.metrics[i]['gender'] === gender) {
+  //       return this.metrics[i]['metrics'];
+  //     }
+  //   }
+  //   return null;
+  // }
 
   private findDatapoint(metric, userDatapoints) {
     for (let i = 0; i < userDatapoints.length; i++) {

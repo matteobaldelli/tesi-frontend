@@ -52,7 +52,7 @@ export class VisitComponent implements OnInit {
     this.medicalService.getMedicals(params).subscribe(medicals => {
       this.medicals = medicals;
 
-      this.metricsService.getMetrics().subscribe(data => {
+      this.metricsService.getDataMetrics().subscribe(data => {
         this.hDataService.initialize(data as Object[]);
         this.draw(medicals);
       });

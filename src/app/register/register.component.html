@@ -20,6 +20,16 @@
     </div>
   </div>
   <div class="form-group">
+    <label for="register-gender">Sesso</label>
+    <select id="register-gender" class="form-control" formControlName="gender"
+            [ngClass]="{'is-invalid': registerForm.get('gender').errors && registerForm.get('gender').touched}"
+    >
+      <option value="Uomo">Uomo</option>
+      <option value="Donna">Donna</option>
+      <option value="Bambino">Bambino</option>
+    </select>
+  </div>
+  <div class="form-group">
     <button [disabled]="loading || registerForm.invalid" class="btn btn-primary">Register</button>
     <div *ngIf="error" style="color: red">
       Username già in uso

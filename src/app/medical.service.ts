@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Medical } from './medical';
 import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 

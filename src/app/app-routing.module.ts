@@ -5,12 +5,14 @@ import { VisitsComponent } from './visits/visits.component';
 import { VisitComponent } from './visit/visit.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { MetricsComponent } from './metrics/metrics.component';
 
 const routes: Routes = [
   { path: 'visits', component: VisitsComponent, canActivate: [AuthGuard] },
   { path: 'visit/:id', component: VisitComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'admin/metrics', component: MetricsComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'visits' }
 
 ];

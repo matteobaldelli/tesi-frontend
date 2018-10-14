@@ -16,6 +16,7 @@ import { AuthGuard } from './auth.guard';
 import { JwtInterceptor } from './jwt.interceptor';
 import { ErrorInterceptor } from './error.interceptor';
 import { RegisterComponent } from './register/register.component';
+import { MetricsComponent } from './metrics/metrics.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { RegisterComponent } from './register/register.component';
     VisitComponent,
     MessageComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    MetricsComponent
   ],
   imports: [
     BrowserModule,
