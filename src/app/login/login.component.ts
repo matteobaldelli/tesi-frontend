@@ -14,18 +14,16 @@ import { UserService } from '../user.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  registerForm: FormGroup;
   loading = false;
   submitted = false;
   returnUrl: string;
-  status: string;
+  error = false;
 
   constructor(
       private formBuilder: FormBuilder,
       private route: ActivatedRoute,
       private router: Router,
       private authenticationService: AuthenticationService,
-      private userService: UserService,
   ) {}
 
   ngOnInit() {
@@ -34,13 +32,6 @@ export class LoginComponent implements OnInit {
           password: ['', Validators.required]
       });
 
-      this.registerForm = this.formBuilder.group({
-          username: ['', Validators.required],
-          password: ['', [Validators.required, Validators.minLength(6)]]
-      });
-
-      this.status = 'login';
-
       // reset login status
       this.authenticationService.logout();
 
@@ -48,9 +39,10 @@ export class LoginComponent implements OnInit {
       this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  onSubmitLogin() {
+  onSubmit() {
       this.submitted = true;
       this.loading = true;
+      this.error = false;
 
       this.authenticationService.login(this.loginForm.value)
           .pipe(first())
@@ -60,25 +52,7 @@ export class LoginComponent implements OnInit {
               },
               error => {
                   this.loading = false;
+                  this.error = true;
               });
-  }
-
-  onSubmitRegister() {
-      this.submitted = true;
-      this.loading = true;
-
-      this.userService.register(this.registerForm.value)
-          .pipe(first())
-          .subscribe(
-              data => {
-                  this.router.navigate(['/login']);
-              },
-              error => {
-                  this.loading = false;
-              });
-  }
-
-  changeStatus(status: string) {
-    this.status = status;
   }
 }
