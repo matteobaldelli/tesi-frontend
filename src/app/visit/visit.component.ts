@@ -66,7 +66,7 @@ export class VisitComponent implements OnInit {
       container: container,
       userdata: {
         hoverevents : true,
-        factors: this.hDataService.process(medicals, 'male')
+        factors: this.hDataService.process(medicals)
       },
       // custom ring size to support upper and lower user panels
       scaleFactors: {

@@ -1,0 +1,33 @@
+<h2>Lista Categorie</h2>
+<ul class="list-group">
+  <li *ngFor="let category of categories" class="list-group-item">
+    {{category.name}}
+    <button type="button" class="btn btn-danger" (click)="delete(category)">
+      <i class="fa fa-trash" aria-hidden="true"></i>
+    </button>
+  </li>
+</ul>
+
+<button type="button" class="btn btn-success" (click)="openModal(template)">
+  <i class="fa fa-plus"></i>
+</button>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Aggiungi nuova categoria</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="newCategory" (ngSubmit)="add()">
+      <div class="form-group">
+        <label for="name">Nome</label>
+        <input type="text" class="form-control" id="name" formControlName="name">
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="!newCategory.valid">
+        <i class="fa fa-plus"></i>
+      </button>
+    </form>
+  </div>
+</ng-template>

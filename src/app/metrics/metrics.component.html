@@ -93,11 +93,18 @@
                [ngClass]="{'is-invalid': newMetric.get('healthy_range_max').errors && newMetric.get('healthy_range_max').touched}"
         >
       </div>
+          <div class="form-group">
+        <label for="category">Category</label>
+        <select id="category" class="form-control" formControlName="category_id">
+          <option value=""></option>
+          <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+        </select>
+      </div>
       <button type="submit" class="btn btn-success" [disabled]="!newMetric.valid">
         <i class="fa fa-plus"></i>
       </button>
       <pre>
-        <!--{{newMetric.value}}}-->
+        {{newMetric.value | json}}}
       </pre>
     </form>
   </div>

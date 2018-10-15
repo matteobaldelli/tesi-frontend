@@ -8,4 +8,5 @@ export class Metric {
   healthy_range_min: number;
   healthy_range_max: number;
   gender: string;
+  category_id?: number;
 }

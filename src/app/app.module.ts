@@ -17,6 +17,7 @@ import { JwtInterceptor } from './jwt.interceptor';
 import { ErrorInterceptor } from './error.interceptor';
 import { RegisterComponent } from './register/register.component';
 import { MetricsComponent } from './metrics/metrics.component';
+import { CategoryComponent } from './category/category.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MetricsComponent } from './metrics/metrics.component';
     MessageComponent,
     LoginComponent,
     RegisterComponent,
-    MetricsComponent
+    MetricsComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,

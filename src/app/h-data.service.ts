@@ -14,8 +14,7 @@ export class HDataService {
     this.metrics = metrics;
   }
 
-  public process(data: Object, gender) {
-    // const userMetric = this.findMetric(gender);
+  public process(data: Object) {
     const userMetric = this.metrics;
     const userDatapoints = data;
     const dataPoints = [];
@@ -37,15 +36,6 @@ export class HDataService {
 
     return dataPoints;
   }
-
-  // private findMetric(gender) {
-  //   for (let i = 0; i < this.metrics.length ; i++) {
-  //     if (this.metrics[i]['gender'] === gender) {
-  //       return this.metrics[i]['metrics'];
-  //     }
-  //   }
-  //   return null;
-  // }
 
   private findDatapoint(metric, userDatapoints) {
     for (let i = 0; i < userDatapoints.length; i++) {

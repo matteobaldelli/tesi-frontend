@@ -1,8 +1,10 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { Metric } from '../metric';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { MetricsService } from '../metrics.service';
+import { CategoryService } from '../category.service';
+import { Metric } from '../metric';
+import { Category } from '../category';
 
 @Component({
   selector: 'app-metrics',
@@ -11,6 +13,7 @@ import { MetricsService } from '../metrics.service';
 })
 export class MetricsComponent implements OnInit {
   metrics: Metric[];
+  categories: Category[];
   modalRef: BsModalRef;
   newMetric = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -21,10 +24,12 @@ export class MetricsComponent implements OnInit {
     total_range_max: new FormControl('', Validators.required),
     healthy_range_min: new FormControl('', Validators.required),
     healthy_range_max: new FormControl('', Validators.required),
+    category_id: new FormControl(''),
   });
 
   constructor(
     private metricsService: MetricsService,
+    private categoryService: CategoryService,
     private modalService: BsModalService
   ) { }
 
@@ -33,7 +38,10 @@ export class MetricsComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+    this.categoryService.getCategories().subscribe(categories => {
+      this.categories = categories;
+      this.modalRef = this.modalService.show(template);
+    });
   }
 
   add(): void {
@@ -46,8 +54,11 @@ export class MetricsComponent implements OnInit {
       total_range_min: this.newMetric.value.total_range_min,
       total_range_max: this.newMetric.value.total_range_max,
       healthy_range_min: this.newMetric.value.healthy_range_min,
-      healthy_range_max: this.newMetric.value.healthy_range_max
+      healthy_range_max: this.newMetric.value.healthy_range_max,
+      category_id: this.newMetric.value.category_id
     } as Metric;
+    console.log(this.newMetric.value.category_id);
+    console.log(metric);
     this.metricsService.addMetric(metric).subscribe(
       newMetric => this.metrics.push(newMetric),
       error => {},
