@@ -57,10 +57,12 @@ export class MetricsComponent implements OnInit {
       healthy_range_max: this.newMetric.value.healthy_range_max,
       category_id: this.newMetric.value.category_id
     } as Metric;
-    console.log(this.newMetric.value.category_id);
-    console.log(metric);
+
     this.metricsService.addMetric(metric).subscribe(
-      newMetric => this.metrics.push(newMetric),
+      newMetric => {
+        this.metrics.push(newMetric);
+        this.newMetric.reset();
+      },
       error => {},
       () => {
         this.newMetric.enable();

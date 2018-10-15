@@ -15,7 +15,7 @@
                         </div>
                         <span class="metric">{{medical.metric}}</span>
                     </li>
-                    <li class="list-item col-xs-4 col-md-2 col-lg-6">
+                    <li class="list-item col-xs-4 col-md-2 col-lg-6" *ngIf="this.newMetric.length">
                         <button type="button" class="btn-add" (click)="openModal(template)">
                             <i class="fa fa-plus"></i>
                         </button>
@@ -25,6 +25,7 @@
         </div>
         <div class="col-lg-9">
             <div class="box">
+                <div *ngIf="medicals.length < 3" style="color: red"> Devi inserire almeno 3 valori</div>
                 <figure id="viz" class="content_inset healthgraph detailed">
                 </figure>
             </div>

@@ -35,7 +35,10 @@ export class CategoryComponent implements OnInit {
       name: this.newCategory.value.name
     } as Category;
     this.categoryService.addCategory(category).subscribe(
-      newCategory => this.categories.push(newCategory),
+      newCategory => {
+        this.categories.push(newCategory);
+        this.newCategory.reset();
+      },
       error => {},
       () => {
         this.newCategory.enable();
