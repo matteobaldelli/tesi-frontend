@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'visit/:id', component: VisitComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'admin/metrics', component: MetricsComponent, canActivate: [AuthGuard] },
+  { path: 'admin/metrics', component: MetricsComponent, canActivate: [AuthGuard], data: {admin: 'true'} },
   { path: '**', redirectTo: 'visits' }
 
 ];

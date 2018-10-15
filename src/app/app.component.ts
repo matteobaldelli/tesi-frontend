@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { setTheme } from 'ngx-bootstrap/utils';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,9 @@ import { setTheme } from 'ngx-bootstrap/utils';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor() {
+  constructor(
+    public userSerivce: UserService
+  ) {
     setTheme('bs4');
   }
 }
