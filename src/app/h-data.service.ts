@@ -63,8 +63,8 @@ export class HDataService {
       return {
         label: metric.name,
         score: HGraph.prototype.calculateScoreFromValue(metric.features, currentDatapoint.value),
-        value: parseFloat(currentDatapoint.value).toFixed(2) + ' ' + metric.features.unitlabel,
-        weight: metric.features.weight
+        value: parseFloat(currentDatapoint.value).toFixed(2) + ' ' + metric.unit_label,
+        weight: metric.weight
       };
     }
 
@@ -90,9 +90,9 @@ export class HDataService {
         dataPoint.details.push({
           label: currentMetric.name,
           score: HGraph.prototype.calculateScoreFromValue(currentMetric.features, currentDatapoint.value),
-          value: parseFloat(currentDatapoint.value).toFixed(2) + ' ' + currentMetric.features.unitlabel,
+          value: parseFloat(currentDatapoint.value).toFixed(2) + ' ' + currentMetric.unit_label,
           actual: currentDatapoint.value,
-          weight: currentMetric.features.weight
+          weight: currentMetric.weight
         });
       }
     }

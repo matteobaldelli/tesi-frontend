@@ -3,8 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
-import {Metric} from './metric';
-import {Visit} from './visit';
+import { Metric } from './metric';
 import { MessageService } from './message.service';
 
 const httpOptions = {
