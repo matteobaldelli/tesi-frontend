@@ -16,7 +16,7 @@
 
 <ng-template #template>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Modal</h4>
+    <h4 class="modal-title pull-left">Aggiungi nuova visita</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -24,7 +24,7 @@
   <div class="modal-body">
     <form [formGroup]="newVisit" (ngSubmit)="add()">
       <div class="form-group">
-        <label for="name">Aggiungi nuova visita</label>
+        <label for="name">Nome della visita</label>
         <input type="text" class="form-control" id="name" formControlName="name">
       </div>
       <button type="submit" class="btn btn-success" [disabled]="!newVisit.valid">

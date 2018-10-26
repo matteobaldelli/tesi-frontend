@@ -1,5 +1,5 @@
 <section id="main">
-    <h1 class="page-title" *ngIf="visit">Dettaglio {{visit.name}}</h1>
+    <h1 class="page-title" *ngIf="visit">Panoramica {{visit.name}}</h1>
     <div class="row">
         <div class="col-lg-3">
             <div class="box">
@@ -35,7 +35,7 @@
 
     <ng-template #template>
         <div class="modal-header">
-            <h4 class="modal-title pull-left">Modal</h4>
+            <h4 class="modal-title pull-left">Nuovo esame</h4>
             <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -43,10 +43,11 @@
         <div class="modal-body">
             <form [formGroup]="newMedical" (ngSubmit)="add()">
                 <div class="form-group">
-                    <label for="metric">Inserire il valore</label>
+                    <label for="metric">Scegli l'esame</label>
                     <select class="form-control" id="metric" formControlName="metric">
                         <option *ngFor="let metric of this.newMetric" [value]="metric">{{metric}}</option>
                     </select>
+                    <label for="value">Inserisci il valore</label>
                     <input type="number" class="form-control" id="value" formControlName="value">
                 </div>
                 <button type="submit" class="btn btn-success" [disabled]="!newMedical.valid">
