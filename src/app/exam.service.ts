@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Medical } from './medical';
+import { Exam } from './exam';
 import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -13,8 +13,8 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class MedicalService {
-  private url = environment.api_url + 'medical';
+export class ExamService {
+  private url = environment.api_url + 'exams';
 
   constructor(
     private messageService: MessageService,
@@ -22,28 +22,28 @@ export class MedicalService {
   ) { }
 
   private log(message: string) {
-    this.messageService.add(`MedicalService: ${message}`);
+    this.messageService.add(`ExamService: ${message}`);
   }
 
-  getMedicals(params: HttpParams): Observable<Medical[]> {
-    return this.http.get<Medical[]>(this.url, {params: params}).pipe(
-      tap(medicals => this.log('fetched visits')),
-      catchError(this.handleError('getMedicals', []))
+  getExams(params: HttpParams): Observable<Exam[]> {
+    return this.http.get<Exam[]>(this.url, {params: params}).pipe(
+      tap(exams => this.log('fetched visits')),
+      catchError(this.handleError('getExams', []))
     );
   }
 
-  addMedical(medical: Medical): Observable<Medical> {
-    return this.http.post<Medical>(this.url, medical, httpOptions).pipe(
-      tap((newMedical: Medical) => this.log(`added medical w/ id=${newMedical.id}`)),
-      catchError(this.handleError<Medical>('addVisit'))
+  addExam(exam: Exam): Observable<Exam> {
+    return this.http.post<Exam>(this.url, exam, httpOptions).pipe(
+      tap((newExam: Exam) => this.log(`added exam w/ id=${newExam.id}`)),
+      catchError(this.handleError<Exam>('addVisit'))
     );
   }
 
-  deleteMedical(medical: Medical | number): Observable<Medical> {
-    const id = typeof medical === 'number' ? medical : medical.id;
-    return this.http.delete<Medical>(this.url + '/' + id, httpOptions).pipe(
-      tap(_ => this.log(`deleted medical id=${id}`)),
-      catchError(this.handleError<Medical>('deleteMedical'))
+  deleteExam(exam: Exam | number): Observable<Exam> {
+    const id = typeof exam === 'number' ? exam : exam.id;
+    return this.http.delete<Exam>(this.url + '/' + id, httpOptions).pipe(
+      tap(_ => this.log(`deleted exam id=${id}`)),
+      catchError(this.handleError<Exam>('deleteExam'))
     );
   }
 

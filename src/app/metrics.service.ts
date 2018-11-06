@@ -14,8 +14,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class MetricsService {
-  private url = environment.api_url + 'metric';
-  public listMetrics: string[];
+  private url = environment.api_url + 'metrics';
 
   constructor(
     private messageService: MessageService,
@@ -23,33 +22,14 @@ export class MetricsService {
   ) { }
 
   private log(message: string) {
-    this.messageService.add(`MedicalService: ${message}`);
+    this.messageService.add(`MetricService: ${message}`);
   }
 
   getDataMetrics(): Observable<Object[]> {
-    // return this.http.get<Object[]>('/assets/metrics.json').pipe(
-    //   tap(metrics => this.listMetrics = this.getListMetrics(metrics[0]['metrics'])),
-    //   catchError(this.handleError('getMetricsData', []))
-    // );
     return this.http.get<Object[]>(this.url + '/data').pipe(
-      tap(metrics => this.listMetrics = this.getListMetrics(metrics)),
+      tap(metrics => this.log('fetched metrics data')),
       catchError(this.handleError('getMetricsData', []))
     );
-  }
-
-  private getListMetrics(metrics: Object[]): string[] {
-    const listMetrics = [];
-    for (const metric of metrics) {
-      if (metric['details'] === undefined) {
-        listMetrics.push(metric['name']);
-      } else {
-        for (const metricDetail of metric['details']) {
-          listMetrics.push(metricDetail['name']);
-        }
-      }
-    }
-
-    return listMetrics;
   }
 
   getMetrics(): Observable<Metric[]> {

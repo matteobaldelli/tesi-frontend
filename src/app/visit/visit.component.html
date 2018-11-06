@@ -4,18 +4,18 @@
         <div class="col-lg-3">
             <div class="box">
                 <ul class="list-stats row">
-                    <li *ngFor="let medical of medicals" class="list-item col-xs-4 col-md-2 col-lg-6">
+                    <li *ngFor="let exam of exams" class="list-item col-xs-4 col-md-2 col-lg-6">
                         <div class="value">
-                            {{medical.value}}
+                            {{exam.value}}
                             <div class="overlay">
-                                <button type="button" class="delete" (click)="delete(medical)">
+                                <button type="button" class="delete" (click)="delete(exam)">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </div>
-                        <span class="metric">{{medical.metric}}</span>
+                        <span class="metric">{{exam.metricName}}</span>
                     </li>
-                    <li class="list-item col-xs-4 col-md-2 col-lg-6" *ngIf="this.newMetric.length">
+                    <li class="list-item col-xs-4 col-md-2 col-lg-6" *ngIf="newMetrics.length">
                         <button type="button" class="btn-add" (click)="openModal(template)">
                             <i class="fa fa-plus"></i>
                         </button>
@@ -25,7 +25,7 @@
         </div>
         <div class="col-lg-9">
             <div class="box">
-                <div *ngIf="medicals.length < 3" style="color: red"> Devi inserire almeno 3 valori</div>
+                <div *ngIf="exams.length < 3" style="color: red"> Devi inserire almeno 3 valori</div>
                 <figure id="viz" class="content_inset healthgraph detailed">
                 </figure>
             </div>
@@ -41,16 +41,23 @@
             </button>
         </div>
         <div class="modal-body">
-            <form [formGroup]="newMedical" (ngSubmit)="add()">
+            <form [formGroup]="newExam" (ngSubmit)="add()">
                 <div class="form-group">
                     <label for="metric">Scegli l'esame</label>
-                    <select class="form-control" id="metric" formControlName="metric">
-                        <option *ngFor="let metric of this.newMetric" [value]="metric">{{metric}}</option>
+                    <select class="form-control" id="metric" formControlName="metric"
+                            (change)="onClickAddControll()"
+                    >
+                        <option *ngFor="let metric of newMetrics" [value]="metric.id">{{metric.name}}</option>
                     </select>
                     <label for="value">Inserisci il valore</label>
                     <input type="number" class="form-control" id="value" formControlName="value">
+                    <div [class.error]="newExam.get('value').errors && newExam.get('value').touched"
+                         *ngIf="metricLabel !== ''"
+                    >
+                        Inserire un valore tra {{metricMin}} e {{metricMax}} di {{metricLabel}}
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-success" [disabled]="!newMedical.valid">
+                <button type="submit" class="btn btn-success" [disabled]="!newExam.valid">
                     <i class="fa fa-check"></i>
                     Inserisci
                 </button>
