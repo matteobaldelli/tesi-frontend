@@ -9,17 +9,19 @@
     <th>Total range max</th>
     <th>Healthy range min</th>
     <th>Healthy range min</th>
+    <th>Categorie</th>
     <th>Azioni</th>
   </tr>
   <tr *ngFor="let metric of metrics">
     <td>{{metric.name}}</td>
     <td>{{metric.gender}}</td>
     <td>{{metric.weight}}</td>
-    <td>{{metric.unit_label}}</td>
-    <td>{{metric.total_range_min}}</td>
-    <td>{{metric.total_range_max}}</td>
-    <td>{{metric.healthy_range_min}}</td>
-    <td>{{metric.healthy_range_max}}</td>
+    <td>{{metric.unitLabel}}</td>
+    <td>{{metric.totalRangeMin}}</td>
+    <td>{{metric.totalRangeMax}}</td>
+    <td>{{metric.healthyRangeMin}}</td>
+    <td>{{metric.healthyRangeMax}}</td>
+    <td>{{metric.categoryName}}</td>
     <td>
       <button type="button" class="btn btn-danger" (click)="delete(metric)">
         <i class="fa fa-trash" aria-hidden="true"></i>
@@ -49,8 +51,8 @@
       </div>
       <div class="form-group">
         <label for="unit_label">Unità</label>
-        <input id="unit_label" class="form-control" formControlName="unit_label" type="text"
-               [ngClass]="{'is-invalid': newMetric.get('unit_label').errors && newMetric.get('unit_label').touched}"
+        <input id="unit_label" class="form-control" formControlName="unitLabel" type="text"
+               [ngClass]="{'is-invalid': newMetric.get('unitLabel').errors && newMetric.get('unitLabel').touched}"
         >
       </div>
       <div class="form-group">
@@ -71,31 +73,31 @@
       </div>
       <div class="form-group">
         <label for="total_range_min">Total Range Min</label>
-        <input id="total_range_min" class="form-control" formControlName="total_range_min" type="number"
-               [ngClass]="{'is-invalid': newMetric.get('total_range_min').errors && newMetric.get('total_range_min').touched}"
+        <input id="total_range_min" class="form-control" formControlName="totalRangeMin" type="number"
+               [ngClass]="{'is-invalid': newMetric.get('totalRangeMin').errors && newMetric.get('totalRangeMin').touched}"
         >
       </div>
       <div class="form-group">
         <label for="total_range_max">Total Range Max</label>
-        <input id="total_range_max" class="form-control" formControlName="total_range_max" type="number"
-               [ngClass]="{'is-invalid': newMetric.get('total_range_max').errors && newMetric.get('total_range_max').touched}"
+        <input id="total_range_max" class="form-control" formControlName="totalRangeMax" type="number"
+               [ngClass]="{'is-invalid': newMetric.get('totalRangeMax').errors && newMetric.get('totalRangeMax').touched}"
         >
       </div>
       <div class="form-group">
         <label for="healthy_range_min">Healthy Range Min</label>
-        <input id="healthy_range_min" class="form-control" formControlName="healthy_range_min" type="number"
-               [ngClass]="{'is-invalid': newMetric.get('healthy_range_min').errors && newMetric.get('healthy_range_min').touched}"
+        <input id="healthy_range_min" class="form-control" formControlName="healthyRangeMin" type="number"
+               [ngClass]="{'is-invalid': newMetric.get('healthyRangeMin').errors && newMetric.get('healthyRangeMin').touched}"
         >
       </div>
       <div class="form-group">
         <label for="healthy_range_max">Healthy Range Max</label>
-        <input id="healthy_range_max" class="form-control" formControlName="healthy_range_max" type="number"
-               [ngClass]="{'is-invalid': newMetric.get('healthy_range_max').errors && newMetric.get('healthy_range_max').touched}"
+        <input id="healthy_range_max" class="form-control" formControlName="healthyRangeMax" type="number"
+               [ngClass]="{'is-invalid': newMetric.get('healthyRangeMax').errors && newMetric.get('healthyRangeMax').touched}"
         >
       </div>
           <div class="form-group">
         <label for="category">Category</label>
-        <select id="category" class="form-control" formControlName="category_id">
+        <select id="category" class="form-control" formControlName="categoryId">
           <option value=""></option>
           <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
         </select>

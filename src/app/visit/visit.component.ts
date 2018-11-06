@@ -151,12 +151,11 @@ export class VisitComponent implements OnInit {
 
   onClickAddControll(): void {
     const metric = this.newMetrics.find((item) => item.id === Number(this.newExam.value.metric));
-    this.metricLabel = metric.unit_label;
-    this.metricMin = metric.total_range_min;
-    this.metricMax = metric.total_range_max;
-    console.log(metric);
+    this.metricLabel = metric.unitLabel;
+    this.metricMin = metric.totalRangeMin;
+    this.metricMax = metric.totalRangeMax;
     this.newExam.controls['value'].setValidators([
-      Validators.required, Validators.min(metric.total_range_min), Validators.max(metric.total_range_max)
+      Validators.required, Validators.min(metric.totalRangeMin), Validators.max(metric.totalRangeMax)
     ]);
 
   }
