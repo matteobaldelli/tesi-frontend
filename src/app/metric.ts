@@ -2,11 +2,12 @@ export class Metric {
   id?: number;
   name: string;
   weight: number;
-  unit_label: string;
-  total_range_min: number;
-  total_range_max: number;
-  healthy_range_min: number;
-  healthy_range_max: number;
+  unitLabel: string;
+  totalRangeMin: number;
+  totalRangeMax: number;
+  healthyRangeMin: number;
+  healthyRangeMax: number;
   gender: string;
-  category_id?: number;
+  categoryId?: number;
+  categoryName?: string;
 }

@@ -19,12 +19,12 @@ export class MetricsComponent implements OnInit {
     name: new FormControl('', Validators.required),
     weight: new FormControl('', Validators.required),
     gender: new FormControl('', Validators.required),
-    unit_label: new FormControl('', Validators.required),
-    total_range_min: new FormControl('', Validators.required),
-    total_range_max: new FormControl('', Validators.required),
-    healthy_range_min: new FormControl('', Validators.required),
-    healthy_range_max: new FormControl('', Validators.required),
-    category_id: new FormControl(''),
+    unitLabel: new FormControl('', Validators.required),
+    totalRangeMin: new FormControl('', Validators.required),
+    totalRangeMax: new FormControl('', Validators.required),
+    healthyRangeMin: new FormControl('', Validators.required),
+    healthyRangeMax: new FormControl('', Validators.required),
+    categoryId: new FormControl(''),
   });
 
   constructor(
@@ -50,12 +50,12 @@ export class MetricsComponent implements OnInit {
       name: this.newMetric.value.name,
       weight: this.newMetric.value.weight,
       gender: this.newMetric.value.gender,
-      unit_label: this.newMetric.value.unit_label,
-      total_range_min: this.newMetric.value.total_range_min,
-      total_range_max: this.newMetric.value.total_range_max,
-      healthy_range_min: this.newMetric.value.healthy_range_min,
-      healthy_range_max: this.newMetric.value.healthy_range_max,
-      category_id: this.newMetric.value.category_id
+      unitLabel: this.newMetric.value.unitLabel,
+      totalRangeMin: this.newMetric.value.totalRangeMin,
+      totalRangeMax: this.newMetric.value.totalRangeMax,
+      healthyRangeMin: this.newMetric.value.healthyRangeMin,
+      healthyRangeMax: this.newMetric.value.healthyRangeMax,
+      categoryId: this.newMetric.value.categoryId
     } as Metric;
 
     this.metricsService.addMetric(metric).subscribe(
