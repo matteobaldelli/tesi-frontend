@@ -4,6 +4,7 @@
     <a routerLink="/visit/{{visit.id}}">
       {{visit.name}}
     </a>
+    <span *ngIf="userService.isAdmin">{{visit.userUsername}}</span>
     <button type="button" class="btn btn-danger" (click)="delete(visit)">
       <i class="fa fa-trash" aria-hidden="true"></i>
     </button>

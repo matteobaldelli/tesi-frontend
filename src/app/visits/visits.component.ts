@@ -1,10 +1,12 @@
 import {Component, OnInit, TemplateRef} from '@angular/core';
-import { Visit } from '../visit';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 
 import { VisitService } from '../visit.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import { UserService } from '../user.service';
+
+import { Visit } from '../visit';
 
 
 @Component({
@@ -21,6 +23,7 @@ export class VisitsComponent implements OnInit {
 
   constructor(
     private visitService: VisitService,
+    public userService: UserService,
     private modalService: BsModalService
   ) { }
 
