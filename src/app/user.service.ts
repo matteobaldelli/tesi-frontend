@@ -7,7 +7,7 @@ import decode from 'jwt-decode';
   providedIn: 'root'
 })
 export class UserService {
-  private url = environment.api_url + 'user';
+  private url = environment.api_url + 'users';
 
   constructor(private http: HttpClient) {}
 

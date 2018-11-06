@@ -14,7 +14,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class CategoryService {
-  private url = environment.api_url + 'category';
+  private url = environment.api_url + 'categories';
 
   constructor(
     private messageService: MessageService,

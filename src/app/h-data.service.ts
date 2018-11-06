@@ -39,7 +39,7 @@ export class HDataService {
 
   private findDatapoint(metric, userDatapoints) {
     for (let i = 0; i < userDatapoints.length; i++) {
-      if (userDatapoints[i]['metric'] === metric ) {
+      if (userDatapoints[i]['metricName'] === metric ) {
         return userDatapoints[i];
       }
     }

@@ -6,12 +6,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
 import { VisitService } from '../visit.service';
-import { MedicalService } from '../medical.service';
+import { ExamService } from '../exam.service';
 import { HDataService } from '../h-data.service';
 import { MetricsService } from '../metrics.service';
 
 import { Visit } from '../visit';
-import { Medical } from '../medical';
+import { Exam } from '../exam';
+import { Metric } from '../metric';
 
 declare var HGraph: any;
 
@@ -22,12 +23,15 @@ declare var HGraph: any;
 })
 export class VisitComponent implements OnInit {
   visit: Visit;
-  medicals: Medical[];
+  exams: Exam[];
   modalRef: BsModalRef;
-  newMetric: string[];
+  newMetrics: Metric[];
   graph: any;
+  metricLabel: string;
+  metricMin: number;
+  metricMax: number;
 
-  newMedical = new FormGroup({
+  newExam = new FormGroup({
     metric: new FormControl(''),
     value: new FormControl('', Validators.required),
   });
@@ -36,44 +40,45 @@ export class VisitComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private visitService: VisitService,
-    private medicalService: MedicalService,
+    private examService: ExamService,
     private hDataService: HDataService,
     private metricsService: MetricsService,
     private modalService: BsModalService
 ) {}
 
   ngOnInit() {
-    this.medicals = [];
-    this.newMetric = [];
+    this.exams = [];
+    this.newMetrics = [];
+    this.metricLabel = '';
     const id = +this.route.snapshot.paramMap.get('id');
 
     this.visitService.getVisit(id).subscribe(visit => this.visit = visit);
 
     let params = new HttpParams();
-    params = params.append('visit_id', '' + id);
-    this.medicalService.getMedicals(params).subscribe(medicals => {
-      this.medicals = medicals;
+    params = params.append('visitId', '' + id);
+    this.examService.getExams(params).subscribe(exams => {
+      this.exams = exams;
 
       this.metricsService.getDataMetrics().subscribe(data => {
         this.hDataService.initialize(data as Object[]);
         this.calculateNewMetric();
-        this.draw(medicals);
+        this.draw(this.exams);
       });
     });
   }
 
-  private draw(medicals: Medical[]): void {
+  private draw(exams: Exam[]): void {
     if (this.graph !== undefined) {
         this.graph.destroy();
       }
 
-    if (medicals.length >= 3) {
+    if (exams.length >= 3) {
       const container = document.getElementById('viz');
       const opts = {
         container: container,
         userdata: {
           hoverevents: true,
-          factors: this.hDataService.process(medicals)
+          factors: this.hDataService.process(exams)
         },
         // custom ring size to support upper and lower user panels
         scaleFactors: {
@@ -104,43 +109,55 @@ export class VisitComponent implements OnInit {
   }
 
   add(): void {
-    this.newMedical.disable();
-    const medical = {
-      metric: this.newMedical.value.metric,
-      value: this.newMedical.value.value,
-      visit_id: this.visit.id
-    } as Medical;
-    this.medicalService.addMedical(medical).subscribe(
-      newMedical => {
-        this.medicals.push(newMedical);
-        this.newMedical.reset();
-        this.draw(this.medicals);
+    this.newExam.disable();
+    const exam = {
+      value: this.newExam.value.value,
+      metricId: this.newExam.value.metric,
+      visitId: this.visit.id
+    } as Exam;
+    this.examService.addExam(exam).subscribe(
+      newExam => {
+        this.exams.push(newExam);
+        this.newExam.reset();
+        this.draw(this.exams);
         this.calculateNewMetric();
       },
       error => {},
       () => {
-        this.newMedical.enable();
+        this.newExam.enable();
         this.modalRef.hide();
       }
     );
   }
 
-  delete(medical: Medical): void {
-    this.medicalService.deleteMedical(medical).subscribe( success => {
-        this.medicals = this.medicals.filter(h => h !== medical);
-        this.draw(this.medicals);
+  delete(exam: Exam): void {
+    this.examService.deleteExam(exam).subscribe( success => {
+        this.exams = this.exams.filter(h => h !== exam);
+        this.draw(this.exams);
         this.calculateNewMetric();
     });
   }
 
   calculateNewMetric(): void {
-    this.newMetric = [];
-    const allMetrics = this.metricsService.listMetrics;
-
-    for (const metric of allMetrics) {
-      if (!this.medicals.find((item) => item.metric === metric)) {
-        this.newMetric.push(metric);
+    this.newMetrics = [];
+    this.metricsService.getMetrics().subscribe(metrics => {
+      for (const metric of metrics) {
+        if (!this.exams.find((item) => item.metricId === metric.id)) {
+          this.newMetrics.push(metric);
+        }
       }
-    }
+    });
+  }
+
+  onClickAddControll(): void {
+    const metric = this.newMetrics.find((item) => item.id === Number(this.newExam.value.metric));
+    this.metricLabel = metric.unit_label;
+    this.metricMin = metric.total_range_min;
+    this.metricMax = metric.total_range_max;
+    console.log(metric);
+    this.newExam.controls['value'].setValidators([
+      Validators.required, Validators.min(metric.total_range_min), Validators.max(metric.total_range_max)
+    ]);
+
   }
 }

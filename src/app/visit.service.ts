@@ -14,7 +14,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class VisitService {
-  private url = environment.api_url + 'visit';
+  private url = environment.api_url + 'visits';
 
   constructor(
     private messageService: MessageService,
