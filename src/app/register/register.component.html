@@ -1,39 +1,47 @@
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  <h2>Registrazione</h2>
-  <div class="form-group">
-    <label for="register-username">Username</label>
-    <input id="register-username" type="text" formControlName="username" class="form-control"
-           [ngClass]="{'is-invalid': registerForm.get('username').errors && registerForm.get('username').touched}"
-    />
-    <div *ngIf="registerForm.get('username').errors && registerForm.get('username').touched" class="invalid-feedback">
-      <div *ngIf="registerForm.get('username').hasError('required')">Username is required</div>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="register-password">Password</label>
-    <input id="register-password" type="password" formControlName="password" class="form-control"
-         [ngClass]="{'is-invalid': registerForm.get('password').errors && registerForm.get('password').touched}"
-    />
-    <div *ngIf="registerForm.get('password').errors && registerForm.get('password').touched" class="invalid-feedback">
-      <div *ngIf="registerForm.get('password').hasError('required')">Password is required</div>
-      <div *ngIf="registerForm.get('password').hasError('minlength')">Password troppo corta</div>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="register-gender">Sesso</label>
-    <select id="register-gender" class="form-control" formControlName="gender"
-            [ngClass]="{'is-invalid': registerForm.get('gender').errors && registerForm.get('gender').touched}"
-    >
-      <option value="Uomo">Uomo</option>
-      <option value="Donna">Donna</option>
-      <option value="Bambino">Bambino</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <button [disabled]="loading || registerForm.invalid" class="btn btn-primary">Register</button>
-    <div *ngIf="error" style="color: red">
-      Username già in uso
-    </div>
+  <h1 class="page-title">Registrazione</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 offset-sm-3">
+        <div class="box sign">
+          <div class="form-group">
+            <label for="register-username">Username</label>
+            <input id="register-username" type="text" formControlName="username" class="form-control"
+                   [ngClass]="{'is-invalid': registerForm.get('username').errors && registerForm.get('username').touched}"
+            />
+            <div *ngIf="registerForm.get('username').errors && registerForm.get('username').touched" class="invalid-feedback">
+              <div *ngIf="registerForm.get('username').hasError('required')">Username is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="register-password">Password</label>
+            <input id="register-password" type="password" formControlName="password" class="form-control"
+                   [ngClass]="{'is-invalid': registerForm.get('password').errors && registerForm.get('password').touched}"
+            />
+            <div *ngIf="registerForm.get('password').errors && registerForm.get('password').touched" class="invalid-feedback">
+              <div *ngIf="registerForm.get('password').hasError('required')">Password is required</div>
+              <div *ngIf="registerForm.get('password').hasError('minlength')">Password troppo corta</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="register-gender">Sesso</label>
+            <select id="register-gender" class="form-control" formControlName="gender"
+                    [ngClass]="{'is-invalid': registerForm.get('gender').errors && registerForm.get('gender').touched}"
+            >
+              <option value="Uomo">Uomo</option>
+              <option value="Donna">Donna</option>
+              <option value="Bambino">Bambino</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <button [disabled]="loading || registerForm.invalid" class="btn btn-primary btn-lg">Register</button>
+            <div *ngIf="error" style="color: red">
+              Username già in uso
+            </div>
 
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </form>
