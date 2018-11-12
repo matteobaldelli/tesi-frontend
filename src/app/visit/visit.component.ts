@@ -146,6 +146,13 @@ export class VisitComponent implements OnInit {
           this.newMetrics.push(metric);
         }
       }
+      if (this.newMetrics.length) {
+        this.newExam.setValue({
+          metric: this.newMetrics[0].id,
+          value: ''
+        });
+        this.onClickAddControll();
+      }
     });
   }
 

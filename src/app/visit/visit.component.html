@@ -47,7 +47,6 @@
           <select class="form-control" id="metric" formControlName="metric"
                   (change)="onClickAddControll()"
           >
-            <option [value]="undefined"></option>
             <option *ngFor="let metric of newMetrics" [value]="metric.id">{{metric.name}}</option>
           </select>
           <label for="value">Inserisci il valore</label>
