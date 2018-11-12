@@ -20,6 +20,9 @@
               <a class="btn btn-default" routerLink="/visit/{{visit.id}}">
                 <i class="fa fa-eye" aria-hidden="true"></i>
               </a>
+              <button type="button" class="btn btn-default" (click)="edit(visit)">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+              </button>
               <button type="button" class="btn btn-danger" (click)="delete(visit)">
                 <i class="fa fa-trash" aria-hidden="true"></i>
               </button>
@@ -28,26 +31,26 @@
         </table>
       </div>
       <br/>
-      <button type="button" class="btn btn-success pull-right" (click)="openModal(template)">
+      <button type="button" class="btn btn-success pull-right" (click)="add()">
         Aggiungi visita
       </button>
     </div>
   </div>
-  <ng-template #template>
+  <ng-template #form>
     <div class="modal-header">
-      <h4 class="modal-title pull-left">Aggiungi nuova visita</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <h4 class="modal-title pull-left">{{titleForm}} visita</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="hideForm()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <form [formGroup]="newVisit" (ngSubmit)="add()">
+      <form [formGroup]="visitForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="name">Nome della visita</label>
           <input type="text" class="form-control" id="name" formControlName="name">
         </div>
-        <button type="submit" class="btn btn-success pull-right" [disabled]="!newVisit.valid">
-          Aggiungi
+        <button type="submit" class="btn btn-success pull-right" [disabled]="!visitForm.valid">
+          {{titleForm}}
         </button>
       </form>
     </div>

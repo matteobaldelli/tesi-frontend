@@ -1,8 +1,11 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { Category } from '../category';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+
 import { CategoryService } from '../category.service';
+
+import { Category } from '../category';
 
 @Component({
   selector: 'app-category',
@@ -10,9 +13,13 @@ import { CategoryService } from '../category.service';
   styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit {
+  @ViewChild('form')
+  private templateForm: TemplateRef<any>;
   categories: Category[];
   modalRef: BsModalRef;
-  newCategory = new FormGroup({
+  titleForm: string;
+  categoryForm = new FormGroup({
+    id: new FormControl({ value: null, disabled: true}),
     name: new FormControl('', Validators.required),
   });
 
@@ -25,24 +32,56 @@ export class CategoryComponent implements OnInit {
     this.categoryService.getCategories().subscribe(categories => this.categories = categories);
   }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+  add(): void {
+    this.titleForm = 'Aggiungi';
+    this.modalRef = this.modalService.show(this.templateForm, { keyboard: false });
   }
 
-  add(): void {
-    this.newCategory.disable();
+  edit(category: Category): void {
+    this.titleForm = 'Modifica';
+    this.categoryForm.setValue({
+      id: category.id,
+      name: category.name
+    });
+    this.modalRef = this.modalService.show(this.templateForm, { keyboard: false });
+  }
+
+  onSubmit(): void {
+    this.categoryForm.disable();
     const category = {
-      name: this.newCategory.value.name
+      id: this.categoryForm.value.id,
+      name: this.categoryForm.value.name
     } as Category;
+    if (category.id) {
+      this.onSubmitUpdate(category);
+    } else {
+      this.onSubmitAdd(category);
+    }
+  }
+
+  private onSubmitAdd(category: Category): void {
     this.categoryService.addCategory(category).subscribe(
       newCategory => {
         this.categories.push(newCategory);
-        this.newCategory.reset();
       },
       error => {},
       () => {
-        this.newCategory.enable();
-        this.modalRef.hide();
+        this.categoryForm.enable();
+        this.hideForm();
+      }
+    );
+  }
+
+   private onSubmitUpdate(category: Category): void {
+    this.categoryService.updateCategory(category).subscribe(
+      updateCategory => {
+        const index = this.categories.findIndex(c => c.id === updateCategory.id);
+        this.categories[index] = updateCategory;
+      },
+      error => {},
+      () => {
+        this.categoryForm.enable();
+        this.hideForm();
       }
     );
   }
@@ -50,5 +89,10 @@ export class CategoryComponent implements OnInit {
   delete(category: Category): void {
     this.categories = this.categories.filter(h => h !== category);
     this.categoryService.deleteCategory(category).subscribe();
+  }
+
+  hideForm(): void {
+    this.categoryForm.reset();
+    this.modalRef.hide();
   }
 }
