@@ -1,6 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
@@ -23,7 +22,6 @@ export class CategoryComponent implements OnInit {
     id: new FormControl({ value: null, disabled: true}),
     name: new FormControl('', Validators.required),
   });
-  categorySubscription: Subscription;
 
   constructor(
     private categoryService: CategoryService,
