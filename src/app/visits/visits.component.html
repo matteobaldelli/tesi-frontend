@@ -1,36 +1,55 @@
-<h2>Lista visite</h2>
-<ul class="list-group">
-  <li *ngFor="let visit of visits" class="list-group-item">
-    <a routerLink="/visit/{{visit.id}}">
-      {{visit.name}}
-    </a>
-    <span *ngIf="userService.isAdmin">{{visit.userUsername}}</span>
-    <button type="button" class="btn btn-danger" (click)="delete(visit)">
-      <i class="fa fa-trash" aria-hidden="true"></i>
-    </button>
-  </li>
-</ul>
-
-<button type="button" class="btn btn-success" (click)="openModal(template)">
-  <i class="fa fa-plus"></i>
-</button>
-
-<ng-template #template>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Aggiungi nuova visita</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="newVisit" (ngSubmit)="add()">
-      <div class="form-group">
-        <label for="name">Nome della visita</label>
-        <input type="text" class="form-control" id="name" formControlName="name">
+<h1 class="page-title">Lista visite</h1>
+<div id="main">
+  <div class="container">
+    <div class="box clearfix">
+      <div class="table-responsive">
+        <table class="list-group" style="width:100%">
+          <tr>
+            <th>Nome</th>
+            <th class="text-left">Cliente</th>
+            <th>Azioni</th>
+          </tr>
+          <tr *ngFor="let visit of visits">
+            <td>
+              {{visit.name}}
+            </td>
+            <td class="text-left">
+              <span *ngIf="userService.isAdmin">{{visit.userUsername}}</span>
+            </td>
+            <td>
+              <a class="btn btn-default" routerLink="/visit/{{visit.id}}">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+              </a>
+              <button type="button" class="btn btn-danger" (click)="delete(visit)">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+            </td>
+          </tr>
+        </table>
       </div>
-      <button type="submit" class="btn btn-success" [disabled]="!newVisit.valid">
-        <i class="fa fa-plus"></i>
+      <br/>
+      <button type="button" class="btn btn-success pull-right" (click)="openModal(template)">
+        Aggiungi visita
       </button>
-    </form>
+    </div>
   </div>
-</ng-template>
+  <ng-template #template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Aggiungi nuova visita</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="newVisit" (ngSubmit)="add()">
+        <div class="form-group">
+          <label for="name">Nome della visita</label>
+          <input type="text" class="form-control" id="name" formControlName="name">
+        </div>
+        <button type="submit" class="btn btn-success pull-right" [disabled]="!newVisit.valid">
+          Aggiungi
+        </button>
+      </form>
+    </div>
+  </ng-template>
+</div>

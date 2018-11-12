@@ -1,16 +1,32 @@
-<h2>Lista Categorie</h2>
-<ul class="list-group">
-  <li *ngFor="let category of categories" class="list-group-item">
-    {{category.name}}
-    <button type="button" class="btn btn-danger" (click)="delete(category)">
-      <i class="fa fa-trash" aria-hidden="true"></i>
-    </button>
-  </li>
-</ul>
-
-<button type="button" class="btn btn-success" (click)="openModal(template)">
-  <i class="fa fa-plus"></i>
-</button>
+<h1 class="page-title">Lista Categorie</h1>
+<div id="main">
+  <div class="container">
+    <div class="box clearfix">
+      <div class="table-responsive">
+        <table class="list-group" style="width:100%">
+          <tr>
+            <th>Nome</th>
+            <th>Azioni</th>
+          </tr>
+          <tr *ngFor="let category of categories">
+            <td>
+              {{category.name}}
+            </td>
+            <td>
+              <button type="button" class="btn btn-danger" (click)="delete(category)">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <br/>
+      <button type="button" class="btn btn-success pull-right" (click)="openModal(template)">
+        Aggiungi categoria
+      </button>
+    </div>
+  </div>
+</div>
 
 <ng-template #template>
   <div class="modal-header">
@@ -25,8 +41,8 @@
         <label for="name">Nome</label>
         <input type="text" class="form-control" id="name" formControlName="name">
       </div>
-      <button type="submit" class="btn btn-success" [disabled]="!newCategory.valid">
-        <i class="fa fa-plus"></i>
+      <button type="submit" class="btn btn-success pull-right" [disabled]="!newCategory.valid">
+        Aggiungi
       </button>
     </form>
   </div>

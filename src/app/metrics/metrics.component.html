@@ -1,110 +1,124 @@
-<h2>Lista Parametri</h2>
-<table class="list-group" style="width:100%">
-  <tr>
-    <th>Nome</th>
-    <th>Sesso</th>
-    <th>Peso</th>
-    <th>Label</th>
-    <th>Total range min</th>
-    <th>Total range max</th>
-    <th>Healthy range min</th>
-    <th>Healthy range min</th>
-    <th>Categorie</th>
-    <th>Azioni</th>
-  </tr>
-  <tr *ngFor="let metric of metrics">
-    <td>{{metric.name}}</td>
-    <td>{{metric.gender}}</td>
-    <td>{{metric.weight}}</td>
-    <td>{{metric.unitLabel}}</td>
-    <td>{{metric.totalRangeMin}}</td>
-    <td>{{metric.totalRangeMax}}</td>
-    <td>{{metric.healthyRangeMin}}</td>
-    <td>{{metric.healthyRangeMax}}</td>
-    <td>{{metric.categoryName}}</td>
-    <td>
-      <button type="button" class="btn btn-danger" (click)="delete(metric)">
-        <i class="fa fa-trash" aria-hidden="true"></i>
+<div id="main">
+  <h1 class="page-title">Lista Parametri</h1>
+  <div class="container">
+    <div class="box clearfix">
+      <div class="table-responsive">
+        <table class="list-group" style="width:100%">
+          <tr>
+            <th>Nome</th>
+            <th>Sesso</th>
+            <th>Peso</th>
+            <th>Label</th>
+            <th>Total range min</th>
+            <th>Total range max</th>
+            <th>Healthy range min</th>
+            <th>Healthy range min</th>
+            <th>Categorie</th>
+            <th>Azioni</th>
+          </tr>
+          <tr *ngFor="let metric of metrics">
+            <td>{{metric.name}}</td>
+            <td>{{metric.gender}}</td>
+            <td>{{metric.weight}}</td>
+            <td>{{metric.unitLabel}}</td>
+            <td>{{metric.totalRangeMin}}</td>
+            <td>{{metric.totalRangeMax}}</td>
+            <td>{{metric.healthyRangeMin}}</td>
+            <td>{{metric.healthyRangeMax}}</td>
+            <td>{{metric.categoryName}}</td>
+            <td>
+              <button type="button" class="btn btn-danger" (click)="delete(metric)">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <br />
+      <button type="button" class="btn btn-success pull-right" (click)="openModal(template)" style="display: inline-block; width: auto;">
+        Aggiungi parametro
       </button>
-    </td>
-  </tr>
-</table>
 
-<button type="button" class="btn btn-success" (click)="openModal(template)">
-  <i class="fa fa-plus"></i>
-</button>
-
-<ng-template #template>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Aggiungi nuovo parametro</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
+      <ng-template #template>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Aggiungi nuovo parametro</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="newMetric" (ngSubmit)="add()">
+            <div class="form-group">
+              <label for="name">Nome</label>
+              <input id="name" class="form-control" formControlName="name" type="text"
+                     [ngClass]="{'is-invalid': newMetric.get('name').errors && newMetric.get('name').touched}"
+              >
+            </div>
+            <div class="form-group">
+              <label for="unit_label">Unità</label>
+              <input id="unit_label" class="form-control" formControlName="unitLabel" type="text"
+                     [ngClass]="{'is-invalid': newMetric.get('unitLabel').errors && newMetric.get('unitLabel').touched}"
+              >
+            </div>
+            <div class="form-group">
+              <label for="gender">Sesso</label>
+              <select id="gender" class="form-control" formControlName="gender"
+                      [ngClass]="{'is-invalid': newMetric.get('gender').errors && newMetric.get('gender').touched}"
+              >
+                <option value="Uomo">Uomo</option>
+                <option value="Donna">Donna</option>
+                <option value="Bambino">Bambino</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="weight">Peso</label>
+              <input id="weight" class="form-control" formControlName="weight" type="number"
+                     [ngClass]="{'is-invalid': newMetric.get('weight').errors && newMetric.get('weight').touched}"
+              >
+            </div>
+            <div class="form-group">
+              <label for="total_range_min">Total Range Min</label>
+              <input id="total_range_min" class="form-control" formControlName="totalRangeMin"
+                     type="number"
+                     [ngClass]="{'is-invalid': newMetric.get('totalRangeMin').errors && newMetric.get('totalRangeMin').touched}"
+              >
+            </div>
+            <div class="form-group">
+              <label for="total_range_max">Total Range Max</label>
+              <input id="total_range_max" class="form-control" formControlName="totalRangeMax"
+                     type="number"
+                     [ngClass]="{'is-invalid': newMetric.get('totalRangeMax').errors && newMetric.get('totalRangeMax').touched}"
+              >
+            </div>
+            <div class="form-group">
+              <label for="healthy_range_min">Healthy Range Min</label>
+              <input id="healthy_range_min" class="form-control" formControlName="healthyRangeMin"
+                     type="number"
+                     [ngClass]="{'is-invalid': newMetric.get('healthyRangeMin').errors && newMetric.get('healthyRangeMin').touched}"
+              >
+            </div>
+            <div class="form-group">
+              <label for="healthy_range_max">Healthy Range Max</label>
+              <input id="healthy_range_max" class="form-control" formControlName="healthyRangeMax"
+                     type="number"
+                     [ngClass]="{'is-invalid': newMetric.get('healthyRangeMax').errors && newMetric.get('healthyRangeMax').touched}"
+              >
+            </div>
+            <div class="form-group">
+              <label for="category">Category</label>
+              <select id="category" class="form-control" formControlName="categoryId">
+                <option value=""></option>
+                <option *ngFor="let category of categories" [value]="category.id">
+                  {{category.name}}
+                </option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-success pull-right" [disabled]="!newMetric.valid">
+              Aggiungi
+            </button>
+          </form>
+        </div>
+      </ng-template>
+    </div>
   </div>
-  <div class="modal-body">
-    <form [formGroup]="newMetric" (ngSubmit)="add()">
-      <div class="form-group">
-        <label for="name">Nome</label>
-        <input id="name" class="form-control" formControlName="name" type="text"
-               [ngClass]="{'is-invalid': newMetric.get('name').errors && newMetric.get('name').touched}"
-        >
-      </div>
-      <div class="form-group">
-        <label for="unit_label">Unità</label>
-        <input id="unit_label" class="form-control" formControlName="unitLabel" type="text"
-               [ngClass]="{'is-invalid': newMetric.get('unitLabel').errors && newMetric.get('unitLabel').touched}"
-        >
-      </div>
-      <div class="form-group">
-        <label for="gender">Sesso</label>
-        <select id="gender" class="form-control" formControlName="gender"
-                [ngClass]="{'is-invalid': newMetric.get('gender').errors && newMetric.get('gender').touched}"
-        >
-          <option value="Uomo">Uomo</option>
-          <option value="Donna">Donna</option>
-          <option value="Bambino">Bambino</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="weight">Peso</label>
-        <input id="weight" class="form-control" formControlName="weight" type="number"
-               [ngClass]="{'is-invalid': newMetric.get('weight').errors && newMetric.get('weight').touched}"
-        >
-      </div>
-      <div class="form-group">
-        <label for="total_range_min">Total Range Min</label>
-        <input id="total_range_min" class="form-control" formControlName="totalRangeMin" type="number"
-               [ngClass]="{'is-invalid': newMetric.get('totalRangeMin').errors && newMetric.get('totalRangeMin').touched}"
-        >
-      </div>
-      <div class="form-group">
-        <label for="total_range_max">Total Range Max</label>
-        <input id="total_range_max" class="form-control" formControlName="totalRangeMax" type="number"
-               [ngClass]="{'is-invalid': newMetric.get('totalRangeMax').errors && newMetric.get('totalRangeMax').touched}"
-        >
-      </div>
-      <div class="form-group">
-        <label for="healthy_range_min">Healthy Range Min</label>
-        <input id="healthy_range_min" class="form-control" formControlName="healthyRangeMin" type="number"
-               [ngClass]="{'is-invalid': newMetric.get('healthyRangeMin').errors && newMetric.get('healthyRangeMin').touched}"
-        >
-      </div>
-      <div class="form-group">
-        <label for="healthy_range_max">Healthy Range Max</label>
-        <input id="healthy_range_max" class="form-control" formControlName="healthyRangeMax" type="number"
-               [ngClass]="{'is-invalid': newMetric.get('healthyRangeMax').errors && newMetric.get('healthyRangeMax').touched}"
-        >
-      </div>
-          <div class="form-group">
-        <label for="category">Category</label>
-        <select id="category" class="form-control" formControlName="categoryId">
-          <option value=""></option>
-          <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-success" [disabled]="!newMetric.valid">
-        <i class="fa fa-plus"></i>
-      </button>
-    </form>
-  </div>
-</ng-template>
+</div>
