@@ -10,12 +10,12 @@
 
 /*Color of web that connects datapoints*/
 .web {
-	fill : rgba(0,0,0,0.1);
+	fill : rgba(255, 255, 255, 0.3);
 }
 
 /*Color of circle + labels of healty datapoints*/
 .healthy {
-	fill : #616363;
+	fill : white;
 }
 
 /*Color of circle + labels of unhealty datapoints*/
