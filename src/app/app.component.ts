@@ -8,9 +8,15 @@ import { UserService } from './user.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  navbarOpen = false;
+
   constructor(
     public userService: UserService
   ) {
     setTheme('bs4');
+  }
+
+  toggleNavbar() {
+    this.navbarOpen = !this.navbarOpen;
   }
 }
