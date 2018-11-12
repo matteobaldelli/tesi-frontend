@@ -9,7 +9,7 @@ import { UserService } from './user.service';
 })
 export class AppComponent {
   constructor(
-    public userSerivce: UserService
+    public userService: UserService
   ) {
     setTheme('bs4');
   }

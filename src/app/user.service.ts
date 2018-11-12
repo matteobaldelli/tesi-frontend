@@ -15,6 +15,10 @@ export class UserService {
       return this.http.post(this.url, user);
   }
 
+  get logged() {
+    return localStorage.getItem('access_token') !== null;
+  }
+
   get isAdmin() {
     const access_token = localStorage.getItem('access_token');
     if (access_token) {
