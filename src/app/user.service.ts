@@ -15,7 +15,7 @@ export class UserService {
       return this.http.post(this.url, user);
   }
 
-  get logged() {
+  get logged(): boolean {
     return localStorage.getItem('access_token') !== null;
   }
 
