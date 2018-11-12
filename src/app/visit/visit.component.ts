@@ -32,7 +32,7 @@ export class VisitComponent implements OnInit {
   metricMax: number;
 
   newExam = new FormGroup({
-    metric: new FormControl(''),
+    metric: new FormControl(undefined, Validators.required),
     value: new FormControl('', Validators.required),
   });
 
