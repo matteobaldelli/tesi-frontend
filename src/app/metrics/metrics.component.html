@@ -27,6 +27,9 @@
             <td>{{metric.healthyRangeMax}}</td>
             <td>{{metric.categoryName}}</td>
             <td>
+              <button type="button" class="btn btn-default" (click)="edit(metric)">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+              </button>
               <button type="button" class="btn btn-danger" (click)="delete(metric)">
                 <i class="fa fa-trash" aria-hidden="true"></i>
               </button>
@@ -35,35 +38,35 @@
         </table>
       </div>
       <br />
-      <button type="button" class="btn btn-success pull-right" (click)="openModal(template)" style="display: inline-block; width: auto;">
+      <button type="button" class="btn btn-success pull-right" (click)="add()" style="display: inline-block; width: auto;">
         Aggiungi parametro
       </button>
 
-      <ng-template #template>
+      <ng-template #form>
         <div class="modal-header">
-          <h4 class="modal-title pull-left">Aggiungi nuovo parametro</h4>
-          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <h4 class="modal-title pull-left">{{titleForm}} parametro</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="hideForm()">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form [formGroup]="newMetric" (ngSubmit)="add()">
+          <form [formGroup]="metricForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
               <label for="name">Nome</label>
               <input id="name" class="form-control" formControlName="name" type="text"
-                     [ngClass]="{'is-invalid': newMetric.get('name').errors && newMetric.get('name').touched}"
+                     [ngClass]="{'is-invalid': metricForm.get('name').errors && metricForm.get('name').touched}"
               >
             </div>
             <div class="form-group">
               <label for="unit_label">Unità</label>
               <input id="unit_label" class="form-control" formControlName="unitLabel" type="text"
-                     [ngClass]="{'is-invalid': newMetric.get('unitLabel').errors && newMetric.get('unitLabel').touched}"
+                     [ngClass]="{'is-invalid': metricForm.get('unitLabel').errors && metricForm.get('unitLabel').touched}"
               >
             </div>
             <div class="form-group">
               <label for="gender">Sesso</label>
               <select id="gender" class="form-control" formControlName="gender"
-                      [ngClass]="{'is-invalid': newMetric.get('gender').errors && newMetric.get('gender').touched}"
+                      [ngClass]="{'is-invalid': metricForm.get('gender').errors && metricForm.get('gender').touched}"
               >
                 <option value="Uomo">Uomo</option>
                 <option value="Donna">Donna</option>
@@ -73,35 +76,35 @@
             <div class="form-group">
               <label for="weight">Peso</label>
               <input id="weight" class="form-control" formControlName="weight" type="number"
-                     [ngClass]="{'is-invalid': newMetric.get('weight').errors && newMetric.get('weight').touched}"
+                     [ngClass]="{'is-invalid': metricForm.get('weight').errors && metricForm.get('weight').touched}"
               >
             </div>
             <div class="form-group">
               <label for="total_range_min">Total Range Min</label>
               <input id="total_range_min" class="form-control" formControlName="totalRangeMin"
                      type="number"
-                     [ngClass]="{'is-invalid': newMetric.get('totalRangeMin').errors && newMetric.get('totalRangeMin').touched}"
+                     [ngClass]="{'is-invalid': metricForm.get('totalRangeMin').errors && metricForm.get('totalRangeMin').touched}"
               >
             </div>
             <div class="form-group">
               <label for="total_range_max">Total Range Max</label>
               <input id="total_range_max" class="form-control" formControlName="totalRangeMax"
                      type="number"
-                     [ngClass]="{'is-invalid': newMetric.get('totalRangeMax').errors && newMetric.get('totalRangeMax').touched}"
+                     [ngClass]="{'is-invalid': metricForm.get('totalRangeMax').errors && metricForm.get('totalRangeMax').touched}"
               >
             </div>
             <div class="form-group">
               <label for="healthy_range_min">Healthy Range Min</label>
               <input id="healthy_range_min" class="form-control" formControlName="healthyRangeMin"
                      type="number"
-                     [ngClass]="{'is-invalid': newMetric.get('healthyRangeMin').errors && newMetric.get('healthyRangeMin').touched}"
+                     [ngClass]="{'is-invalid': metricForm.get('healthyRangeMin').errors && metricForm.get('healthyRangeMin').touched}"
               >
             </div>
             <div class="form-group">
               <label for="healthy_range_max">Healthy Range Max</label>
               <input id="healthy_range_max" class="form-control" formControlName="healthyRangeMax"
                      type="number"
-                     [ngClass]="{'is-invalid': newMetric.get('healthyRangeMax').errors && newMetric.get('healthyRangeMax').touched}"
+                     [ngClass]="{'is-invalid': metricForm.get('healthyRangeMax').errors && metricForm.get('healthyRangeMax').touched}"
               >
             </div>
             <div class="form-group">
@@ -113,8 +116,8 @@
                 </option>
               </select>
             </div>
-            <button type="submit" class="btn btn-success pull-right" [disabled]="!newMetric.valid">
-              Aggiungi
+            <button type="submit" class="btn btn-success pull-right" [disabled]="!metricForm.valid">
+              {{titleForm}}
             </button>
           </form>
         </div>
