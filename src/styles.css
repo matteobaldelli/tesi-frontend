@@ -43,9 +43,26 @@ body .box.sign .btn-link {
 }
 
 .btn {
-    width: 100%;
     border: none;
     font-weight: 700;
+}
+
+.btn.full {
+    width: 100%;
+}
+
+.btn-default {
+    background-color: #ccc;
+    color: #000;
+}
+
+.btn-default:hover {
+    background-color: #FFF;
+    color: #000;
+}
+
+.btn+.btn {
+    margin-left: 10px;
 }
 
 .btn-lg {
@@ -56,7 +73,7 @@ body .box.sign .btn-link {
     border-radius: inherit;
 }
 
-.form-control.is-invalid~.invalid-feedback {
+.form-control.is-invalid ~ .invalid-feedback {
     margin: -10px 0 0;
     position: relative;
 }
@@ -69,7 +86,7 @@ body .box.sign .btn-link {
 }
 
 #main {
-    padding: 0 15px;
+    padding: 0 15px 50px;
 }
 
 .navbar {
@@ -80,8 +97,38 @@ body .box.sign .btn-link {
     background-color: #FFF;
     box-shadow: 0 0 11px 0 #0000009c;
     border-radius: 5px;
-    padding: 30px 20px;
+    padding: 30px 40px;
     margin-top: 20px;
+}
+
+.box table {
+    font-size: 14px;
+}
+
+.box table tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.box table tr td,
+.box table tr th {
+    padding: 5px 15px;
+    text-align: center;
+}
+
+.box table tr td:first-child,
+.box table tr th:first-child {
+    text-align: left;
+    padding-left: 0;
+}
+
+.box table tr td:last-child,
+.box table tr th:last-child {
+    text-align: right;
+    padding-right: 0;
+}
+
+.box table tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 ul.list-stats {
@@ -166,10 +213,18 @@ svg.healthscore {
     overflow: scroll;
 }
 
+.list-group {
+    display: table;
+    flex-direction: inherit;
+    padding-left: 0;
+    margin-bottom: inherit;
+}
+
 @media screen and (max-width: 767px) {
     .col-xs-6 {
         max-width: 50%;
     }
+
     .col-xs-4 {
         max-width: 33.333%;
     }
