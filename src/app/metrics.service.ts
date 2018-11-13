@@ -25,8 +25,8 @@ export class MetricsService {
     this.messageService.add(`MetricService: ${message}`);
   }
 
-  getDataMetrics(): Observable<Object[]> {
-    return this.http.get<Object[]>(this.url + '/data').pipe(
+  getDataMetrics(params?: HttpParams): Observable<Object[]> {
+    return this.http.get<Object[]>(this.url + '/data', {params: params}).pipe(
       tap(metrics => this.log('fetched metrics data')),
       catchError(this.handleError('getMetricsData', []))
     );
