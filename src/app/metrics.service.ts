@@ -32,7 +32,7 @@ export class MetricsService {
     );
   }
 
-  getMetrics(params: HttpParams): Observable<Metric[]> {
+  getMetrics(params?: HttpParams): Observable<Metric[]> {
     return this.http.get<Metric[]>(this.url, {params: params}).pipe(
       tap(metrics => this.log('fetched metrics')),
       catchError(this.handleError('getMetrics', []))
