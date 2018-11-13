@@ -6,15 +6,15 @@
         <table class="list-group" style="width:100%">
           <tr>
             <th>Nome</th>
-            <th class="text-left">Cliente</th>
+            <th class="text-left" *ngIf="userService.isAdmin">Utente</th>
             <th>Azioni</th>
           </tr>
           <tr *ngFor="let visit of visits">
             <td>
               {{visit.name}}
             </td>
-            <td class="text-left">
-              <span *ngIf="userService.isAdmin">{{visit.userUsername}}</span>
+            <td class="text-left" *ngIf="userService.isAdmin">
+              <span>{{visit.userUsername}}</span>
             </td>
             <td>
               <a class="btn btn-default" routerLink="/visit/{{visit.id}}">
