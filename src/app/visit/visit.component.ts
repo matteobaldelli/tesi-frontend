@@ -140,7 +140,9 @@ export class VisitComponent implements OnInit {
 
   calculateNewMetric(): void {
     this.newMetrics = [];
-    this.metricsService.getMetrics().subscribe(metrics => {
+    let params = new HttpParams();
+    params = params.append('gender', this.visit.userGender);
+    this.metricsService.getMetrics(params).subscribe(metrics => {
       for (const metric of metrics) {
         if (!this.exams.find((item) => item.metricId === metric.id)) {
           this.newMetrics.push(metric);
