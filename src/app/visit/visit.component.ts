@@ -58,8 +58,9 @@ export class VisitComponent implements OnInit {
     params = params.append('visitId', '' + id);
     this.examService.getExams(params).subscribe(exams => {
       this.exams = exams;
-
-      this.metricsService.getDataMetrics().subscribe(data => {
+      let paramsData = new HttpParams();
+      paramsData = paramsData.append('gender', this.visit.userGender);
+      this.metricsService.getDataMetrics(paramsData).subscribe(data => {
         this.hDataService.initialize(data as Object[]);
         this.calculateNewMetric();
         this.draw(this.exams);
