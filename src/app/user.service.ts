@@ -1,7 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 import decode from 'jwt-decode';
+
+import { MessageService } from './message.service';
+import { User } from './user';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +18,20 @@ import decode from 'jwt-decode';
 export class UserService {
   private url = environment.api_url + 'users';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService
+  ) {}
 
-  register(user: Object) {
-      return this.http.post(this.url, user);
+  private log(message: string) {
+    this.messageService.add(`VisitService: ${message}`);
+  }
+
+  addUser(user: User) {
+      return this.http.post(this.url, user, httpOptions).pipe(
+      tap((newUser: User) => this.log(`added user w/ id=${newUser.id}`)),
+      catchError(this.handleError<User>('addUser'))
+    );
   }
 
   get logged(): boolean {
@@ -25,5 +44,24 @@ export class UserService {
       return decode(access_token).admin;
     }
     return false;
+  }
+
+  /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+  private handleError<T> (operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      this.log(`${operation} failed: ${error.message}`);
+
+      return throwError(error);
+    };
   }
 }
