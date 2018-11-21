@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../user.service';
 import { AuthenticationService } from '../authentication.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import {User} from '../user';
 
 @Component({
   selector: 'app-register',
@@ -29,7 +30,8 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      gender: ['', Validators.required]
+      gender: ['', Validators.required],
+      birthDate: ['', Validators.required]
     });
 
     // reset login status
@@ -44,7 +46,14 @@ export class RegisterComponent implements OnInit {
     this.loading = true;
     this.error = false;
 
-    this.userService.register(this.registerForm.value)
+    const user = {
+      username: this.registerForm.value.username,
+      gender: this.registerForm.value.gender,
+      password: this.registerForm.value.password,
+      birthDate: this.registerForm.value.birthDate
+    } as User;
+
+    this.userService.addUser(user)
       .pipe(first())
       .subscribe(
         data => {
