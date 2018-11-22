@@ -52,18 +52,20 @@ export class VisitComponent implements OnInit {
     this.metricLabel = '';
     const id = +this.route.snapshot.paramMap.get('id');
 
-    this.visitService.getVisit(id).subscribe(visit => this.visit = visit);
+    this.visitService.getVisit(id).subscribe(visit => {
+      this.visit = visit;
 
-    let params = new HttpParams();
-    params = params.append('visitId', '' + id);
-    this.examService.getExams(params).subscribe(exams => {
-      this.exams = exams;
-      let paramsData = new HttpParams();
-      paramsData = paramsData.append('gender', this.visit.userGender);
-      this.metricsService.getDataMetrics(paramsData).subscribe(data => {
-        this.hDataService.initialize(data as Object[]);
-        this.calculateNewMetric();
-        this.draw(this.exams);
+      let params = new HttpParams();
+      params = params.append('visitId', '' + id);
+      this.examService.getExams(params).subscribe(exams => {
+        this.exams = exams;
+        let paramsData = new HttpParams();
+        paramsData = paramsData.append('gender', this.visit.userGender);
+        this.metricsService.getDataMetrics(paramsData).subscribe(data => {
+          this.hDataService.initialize(data as Object[]);
+          this.calculateNewMetric();
+          this.draw(this.exams);
+        });
       });
     });
   }
