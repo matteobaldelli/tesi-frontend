@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { ModalModule } from 'ngx-bootstrap';
+import { NouisliderModule } from 'ng2-nouislider';
 
 import { AppComponent } from './app.component';
 import { VisitsComponent } from './visits/visits.component';
@@ -18,6 +19,7 @@ import { ErrorInterceptor } from './error.interceptor';
 import { RegisterComponent } from './register/register.component';
 import { MetricsComponent } from './metrics/metrics.component';
 import { CategoryComponent } from './category/category.component';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { CategoryComponent } from './category/category.component';
     LoginComponent,
     RegisterComponent,
     MetricsComponent,
-    CategoryComponent
+    CategoryComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,
@@ -36,12 +39,11 @@ import { CategoryComponent } from './category/category.component';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    NouisliderModule
   ],
   providers: [
     AuthGuard,
-  //   AuthenticationService,
-  //   UserService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
