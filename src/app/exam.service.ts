@@ -47,6 +47,13 @@ export class ExamService {
     );
   }
 
+  statisticsExam(params: HttpParams): Observable<Exam[]> {
+    return this.http.get<Exam[]>(this.url + '/statistics', {params: params}).pipe(
+      tap(exams => this.log('fetched visits statistics')),
+      catchError(this.handleError('getExamsStatistics', []))
+    );
+  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.

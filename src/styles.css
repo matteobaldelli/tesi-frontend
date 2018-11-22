@@ -1,5 +1,7 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~font-awesome/css/font-awesome.css';
+@import "~nouislider/distribute/nouislider.min.css";
+
 @import '/assets/healthGraph.css';
 
 html,

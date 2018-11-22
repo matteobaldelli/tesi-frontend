@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MetricsComponent } from './metrics/metrics.component';
 import { CategoryComponent } from './category/category.component';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 const routes: Routes = [
   { path: 'visits', component: VisitsComponent, canActivate: [AuthGuard] },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'admin/params', component: MetricsComponent, canActivate: [AuthGuard], data: {admin: 'true'} },
   { path: 'admin/categories', component: CategoryComponent, canActivate: [AuthGuard], data: {admin: 'true'} },
+  { path: 'admin/statistics', component: StatisticsComponent, canActivate: [AuthGuard], data: {admin: 'true'} },
   { path: '**', redirectTo: 'visits' }
 
 ];
