@@ -3,4 +3,5 @@ export class Visit {
   name: string;
   userUsername?: string;
   userGender?: string;
+  dateCreated?: Date;
 }
