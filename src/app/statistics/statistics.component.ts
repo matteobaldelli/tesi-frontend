@@ -55,7 +55,6 @@ export class StatisticsComponent implements OnInit {
     let params = new HttpParams();
     params = params.append('gender', this.searchForm.value.gender);
     params = params.append('age', this.searchForm.value.age);
-    console.log(this.metricsForm.value);
     Object.keys(this.metricsForm.value).forEach(key => {
       params = params.append(key, this.metricsForm.value[key]);
     });
