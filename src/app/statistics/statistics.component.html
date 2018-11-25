@@ -10,10 +10,19 @@
           <option value="Bambino">Bambino</option>
         </select>
         Anni
-        <nouislider [tooltips]="[true, true]" [connect]="true" [min]="0" [max]="100" [step]="10"
+        <nouislider [tooltips]="[true, true]" [connect]="true" [min]="0" [max]="100" [step]="1"
                     [formControl]="searchForm.controls['age']">
         </nouislider>
         <button [disabled]="searchForm.invalid" class="btn btn-primary btn-lg full">Cerca</button>
+      </form>
+      <form [formGroup]="metricsForm" (ngSubmit)="onSubmit()">
+        <div *ngFor="let metric of metrics">
+          {{metric.name}}
+          <nouislider [step]="1" [min]="metric.totalRangeMin" [max]="metric.totalRangeMax"
+                      [tooltips]="[true, true]" [connect]="true"[formControl]="metricsForm.controls[metric.name]"
+          >
+          </nouislider>
+        </div>
       </form>
     </div>
       <div class="box">
