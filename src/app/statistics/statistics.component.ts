@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 
 import { ExamService } from '../exam.service';
@@ -7,6 +7,7 @@ import { MetricsService } from '../metrics.service';
 import { HDataService } from '../h-data.service';
 
 import { Exam} from '../exam';
+import { Metric } from '../metric';
 
 declare var HGraph: any;
 
@@ -17,7 +18,9 @@ declare var HGraph: any;
 })
 export class StatisticsComponent implements OnInit {
   searchForm: FormGroup;
+  metricsForm: FormGroup;
   graph: any;
+  metrics: Metric[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,6 +34,7 @@ export class StatisticsComponent implements OnInit {
       gender: ['Uomo', Validators.required],
       age: [[0, 100]]
     });
+    this.metricsForm = this.formBuilder.group({});
 
     this.onChangeGender();
     this.onSubmit();
@@ -43,7 +47,7 @@ export class StatisticsComponent implements OnInit {
     this.metricsService.getDataMetrics(paramsData).subscribe(data => {
       this.hDataService.initialize(data as Object[]);
     });
-
+    this.loadFilter();
     this.onSubmit();
   }
 
@@ -51,8 +55,26 @@ export class StatisticsComponent implements OnInit {
     let params = new HttpParams();
     params = params.append('gender', this.searchForm.value.gender);
     params = params.append('age', this.searchForm.value.age);
+    console.log(this.metricsForm.value);
+    Object.keys(this.metricsForm.value).forEach(key => {
+      params = params.append(key, this.metricsForm.value[key]);
+    });
     this.examService.statisticsExam(params).subscribe(exams => {
         this.draw(exams);
+    });
+  }
+
+  private loadFilter(): void {
+    const gender = this.searchForm.value.gender;
+    let paramsData = new HttpParams();
+    paramsData = paramsData.append('gender', gender);
+
+    this.metricsService.getMetrics(paramsData).subscribe( metrics => {
+      this.metricsForm = this.formBuilder.group({});
+      metrics.forEach(metric => {
+        this.metricsForm.addControl(metric.name, new FormControl([metric.totalRangeMin, metric.totalRangeMax]));
+      });
+      this.metrics = metrics;
     });
   }
 
