@@ -1,0 +1,57 @@
+.box.filters-container,
+.box.graph-container {
+    height: 800px;
+}
+
+.box.filters-container {
+    position: relative;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.box.filters-container > .content {
+    height: calc(100% - 50px);
+    overflow: auto;
+}
+
+.box.filters-container form .filter-type {
+    margin-bottom: 40px;
+}
+
+.box.filters-container form .filter-type nouislider {
+    padding: 0 17px;
+}
+
+.box.filters-container form .filter-type nouislider .noUi-horizontal {
+    height: 10px;
+    border: none;
+}
+
+.box.filters-container form .filter-type nouislider .noUi-connect {
+    background: #007bff;
+}
+
+.box.filters-container form .filter-type .noUi-handle {
+    top: -9px;
+}
+
+.box.filters-container form .filter-type .noUi-handle::before,
+.box.filters-container form .filter-type .noUi-handle::after {
+    display: none;
+}
+
+.box.filters-container form .filter-type .noUi-handle .noUi-tooltip {
+    background: none;
+    border: 0;
+    bottom: 4px;
+    padding: 0;
+    font-size: 12px;
+}
+
+.box.filters-container > footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0 10px 10px;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 
@@ -14,7 +14,8 @@ declare var HGraph: any;
 @Component({
   selector: 'app-statistics',
   templateUrl: './statistics.component.html',
-  styleUrls: ['./statistics.component.css']
+  styleUrls: ['./statistics.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class StatisticsComponent implements OnInit {
   searchForm: FormGroup;
