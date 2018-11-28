@@ -1,0 +1,33 @@
+<h1 class="page-title">Lista utenti</h1>
+<div id="main">
+  <div class="container">
+    <div class="box clearfix">
+      <div class="table-responsive">
+        <table class="list-group" style="width:100%">
+          <tr>
+            <th>Nome</th>
+            <th>Data di nascita</th>
+            <th>Data creazione</th>
+            <th>Azioni</th>
+          </tr>
+          <tr *ngFor="let user of users">
+            <td>
+              {{user.username}}
+            </td>
+            <td>
+              {{user.birthDate | date:'longDate'}}
+            </td>
+            <td>
+              {{user.dateCreated | date:'longDate'}}
+            </td>
+            <td>
+              <a class="btn btn-default" routerLink="/visit" [queryParams]="{user: user.id}">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+              </a>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
