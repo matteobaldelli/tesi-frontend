@@ -23,6 +23,7 @@ import { StatisticsComponent } from './statistics/statistics.component';
 
 import { registerLocaleData } from '@angular/common';
 import localeIt from '@angular/common/locales/it';
+import { UsersComponent } from './users/users.component';
 
 registerLocaleData(localeIt);
 
@@ -36,7 +37,8 @@ registerLocaleData(localeIt);
     RegisterComponent,
     MetricsComponent,
     CategoryComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -28,8 +28,8 @@ export class VisitService {
     this.messageService.add(`VisitService: ${message}`);
   }
 
-  getVisits(): Observable<Visit[]> {
-    return this.http.get<Visit[]>(this.url).pipe(
+  getVisits(params?: HttpParams): Observable<Visit[]> {
+    return this.http.get<Visit[]>(this.url, {params: params}).pipe(
       tap(visits => this.log('fetched visits')),
       catchError(this.handleError('getVisits', []))
     );

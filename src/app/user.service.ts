@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
@@ -7,6 +7,7 @@ import decode from 'jwt-decode';
 
 import { MessageService } from './message.service';
 import { User } from './user';
+import {Metric} from './metric';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -25,6 +26,13 @@ export class UserService {
 
   private log(message: string) {
     this.messageService.add(`VisitService: ${message}`);
+  }
+
+  getUsers(params?: HttpParams): Observable<User[]> {
+    return this.http.get<User[]>(this.url, {params: params}).pipe(
+      tap(users => this.log('fetched users')),
+      catchError(this.handleError('getUsers', []))
+    );
   }
 
   addUser(user: User) {

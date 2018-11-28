@@ -1,14 +1,21 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 
-import {BsModalRef, BsModalService} from 'ngx-bootstrap';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
 import { VisitService } from '../visit.service';
 import { UserService } from '../user.service';
+import { ExamService } from '../exam.service';
+import { MetricsService } from '../metrics.service';
+import { HDataService } from '../h-data.service';
 
 import { Visit } from '../visit';
-import {Category} from '../category';
+import { Category } from '../category';
+import { Exam } from '../exam';
 
+declare var HGraph: any;
 
 @Component({
   selector: 'app-visits',
@@ -18,6 +25,8 @@ import {Category} from '../category';
 export class VisitsComponent implements OnInit {
   @ViewChild('form')
   private templateForm: TemplateRef<any>;
+  graph: any;
+  showGraphic = false;
   visits: Visit[];
   modalRef: BsModalRef;
   titleForm: string;
@@ -27,13 +36,46 @@ export class VisitsComponent implements OnInit {
   });
 
   constructor(
+    private route: ActivatedRoute,
+    private modalService: BsModalService,
     private visitService: VisitService,
-    public userService: UserService,
-    private modalService: BsModalService
+    private examService: ExamService,
+    private metricsService: MetricsService,
+    private hDataService: HDataService,
+    public userService: UserService
   ) { }
 
   ngOnInit() {
-    this.visitService.getVisits().subscribe(visits => this.visits = visits);
+    this.route.queryParams.subscribe(queryParams => {
+        const user = queryParams['user'];
+        let paramsData = new HttpParams();
+        if (user) {
+          paramsData = paramsData.append('user', user);
+        }
+        this.visitService.getVisits(paramsData).subscribe(visits => {
+          this.visits = visits;
+
+          // TODO: move
+          if (this.visits.length) {
+            let paramsGender = new HttpParams();
+            paramsGender = paramsGender.append('gender', this.visits[0].userGender);
+            this.metricsService.getDataMetrics(paramsGender).subscribe(data => {
+              this.hDataService.initialize(data as Object[]);
+
+              if (!this.userService.isAdmin || (this.userService.isAdmin && user)) {
+                this.showGraphic = true;
+                let params = new HttpParams();
+                this.visits.forEach(visit => {
+                  params = params.append('visits[]', String(visit.id));
+                });
+                this.examService.statisticsExam(params).subscribe(exams => {
+                  this.draw(exams);
+                });
+              }
+            });
+          }
+        });
+    });
   }
 
   add(): void {
@@ -98,5 +140,42 @@ export class VisitsComponent implements OnInit {
   hideForm(): void {
     this.visitForm.reset();
     this.modalRef.hide();
+  }
+
+  private draw(exams: Exam[]): void {
+    if (this.graph !== undefined) {
+      this.graph.destroy();
+    }
+
+    if (exams.length >= 3) {
+      const container = document.getElementById('viz');
+      const opts = {
+        container: container,
+        userdata: {
+          hoverevents: true,
+          factors: this.hDataService.process(exams)
+        },
+        // custom ring size to support upper and lower user panels
+        scaleFactors: {
+          labels: {
+            lower: 6,
+            higher: 1.5
+          },
+          nolabels: {
+            lower: 3,
+            higher: 1
+          }
+        },
+        // custom zoom in factor, higher compared to the usual 2.2
+        zoomFactor: 3,
+        zoomable: true,
+        showLabels: true
+      };
+
+      this.graph = new HGraph(opts);
+      this.graph.width = container.offsetWidth;
+      this.graph.height = container.offsetHeight;
+      this.graph.initialize();
+    }
   }
 }

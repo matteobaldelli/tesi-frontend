@@ -15,6 +15,9 @@
         <a class="nav-link" routerLink="/visits" [routerLinkActive]="['active']">Visite</a>
       </li>
       <li class="nav-item" *ngIf="userService.isAdmin">
+        <a class="nav-link" routerLink="/admin/users" [routerLinkActive]="['active']">Utenti</a>
+      </li>
+      <li class="nav-item" *ngIf="userService.isAdmin">
         <a class="nav-link" routerLink="/admin/params" [routerLinkActive]="['active']">Parametri</a>
       </li>
       <li class="nav-item" *ngIf="userService.isAdmin">

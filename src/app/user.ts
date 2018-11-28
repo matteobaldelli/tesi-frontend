@@ -4,4 +4,5 @@ export class User {
   gender: string;
   password?: string;
   birthDate: Date;
+  dateCreated?: Date;
 }
