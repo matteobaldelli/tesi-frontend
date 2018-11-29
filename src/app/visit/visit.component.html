@@ -25,13 +25,10 @@
     </div>
     <div class="col-lg-9">
       <div class="box">
-        <div *ngIf="exams.length < 3" style="color: red"> Devi inserire almeno 3 valori</div>
-        <figure id="viz" class="content_inset healthgraph detailed">
-        </figure>
+        <app-graphic [exams]="exams" [gender]="visit?.userGender"></app-graphic>
       </div>
     </div>
   </div>
-
 
   <ng-template #template>
     <div class="modal-header">
@@ -64,5 +61,4 @@
       </form>
     </div>
   </ng-template>
-
 </section>

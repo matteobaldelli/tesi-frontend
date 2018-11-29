@@ -7,14 +7,11 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
 import { VisitService } from '../visit.service';
 import { ExamService } from '../exam.service';
-import { HDataService } from '../h-data.service';
 import { MetricsService } from '../metrics.service';
 
 import { Visit } from '../visit';
 import { Exam } from '../exam';
 import { Metric } from '../metric';
-
-declare var HGraph: any;
 
 @Component({
   selector: 'app-visit',
@@ -25,8 +22,7 @@ export class VisitComponent implements OnInit {
   visit: Visit;
   exams: Exam[];
   modalRef: BsModalRef;
-  newMetrics: Metric[];
-  graph: any;
+  newMetrics: Metric[] = [];
   metricLabel: string;
   metricMin: number;
   metricMax: number;
@@ -41,7 +37,6 @@ export class VisitComponent implements OnInit {
     private route: ActivatedRoute,
     private visitService: VisitService,
     private examService: ExamService,
-    private hDataService: HDataService,
     private metricsService: MetricsService,
     private modalService: BsModalService
 ) {}
@@ -59,52 +54,9 @@ export class VisitComponent implements OnInit {
       params = params.append('visitId', '' + id);
       this.examService.getExams(params).subscribe(exams => {
         this.exams = exams;
-        let paramsData = new HttpParams();
-        paramsData = paramsData.append('gender', this.visit.userGender);
-        this.metricsService.getDataMetrics(paramsData).subscribe(data => {
-          this.hDataService.initialize(data as Object[]);
-          this.calculateNewMetric();
-          this.draw(this.exams);
-        });
+        this.calculateNewMetric();
       });
     });
-  }
-
-  private draw(exams: Exam[]): void {
-    if (this.graph !== undefined) {
-        this.graph.destroy();
-      }
-
-    if (exams.length >= 3) {
-      const container = document.getElementById('viz');
-      const opts = {
-        container: container,
-        userdata: {
-          hoverevents: true,
-          factors: this.hDataService.process(exams)
-        },
-        // custom ring size to support upper and lower user panels
-        scaleFactors: {
-          labels: {
-            lower: 6,
-            higher: 1.5
-          },
-          nolabels: {
-            lower: 3,
-            higher: 1
-          }
-        },
-        // custom zoom in factor, higher compared to the usual 2.2
-        zoomFactor: 3,
-        zoomable: true,
-        showLabels: true
-      };
-
-      this.graph = new HGraph(opts);
-      this.graph.width = container.offsetWidth;
-      this.graph.height = container.offsetHeight;
-      this.graph.initialize();
-    }
   }
 
   openModal(template: TemplateRef<any>) {
@@ -120,9 +72,8 @@ export class VisitComponent implements OnInit {
     } as Exam;
     this.examService.addExam(exam).subscribe(
       newExam => {
-        this.exams.push(newExam);
+        this.exams = [...this.exams, newExam];
         this.newExam.reset();
-        this.draw(this.exams);
         this.calculateNewMetric();
       },
       error => {},
@@ -136,7 +87,6 @@ export class VisitComponent implements OnInit {
   delete(exam: Exam): void {
     this.examService.deleteExam(exam).subscribe( success => {
         this.exams = this.exams.filter(h => h !== exam);
-        this.draw(this.exams);
         this.calculateNewMetric();
     });
   }
@@ -169,6 +119,5 @@ export class VisitComponent implements OnInit {
     this.newExam.controls['value'].setValidators([
       Validators.required, Validators.min(metric.totalRangeMin), Validators.max(metric.totalRangeMax)
     ]);
-
   }
 }
