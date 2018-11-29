@@ -61,8 +61,7 @@
   </ng-template>
   <div class="container" *ngIf="showGraphic">
     <div class="box graph-container">
-      <figure id="viz" class="content_inset healthgraph detailed">
-      </figure>
+      <app-graphic [exams]="exams" [dataMetrics]="dataMetrics"></app-graphic>
     </div>
   </div>
 </div>
