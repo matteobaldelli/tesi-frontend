@@ -8,7 +8,6 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { VisitService } from '../visit.service';
 import { UserService } from '../user.service';
 import { ExamService } from '../exam.service';
-import { MetricsService } from '../metrics.service';
 
 import { Visit } from '../visit';
 import { Category } from '../category';
@@ -27,7 +26,6 @@ export class VisitsComponent implements OnInit {
   modalRef: BsModalRef;
   titleForm: string;
   exams: Exam[];
-  dataMetrics: Object[];
   visitForm = new FormGroup({
     id: new FormControl({ value: null, disabled: true}),
     name: new FormControl('', Validators.required)
@@ -39,7 +37,6 @@ export class VisitsComponent implements OnInit {
     private modalService: BsModalService,
     private visitService: VisitService,
     private examService: ExamService,
-    private metricsService: MetricsService,
     public userService: UserService
   ) { }
 
@@ -124,23 +121,17 @@ export class VisitsComponent implements OnInit {
   }
 
   private getAverageData(): void {
-    // TODO: move
     if (this.visits.length) {
-      let paramsGender = new HttpParams();
-      paramsGender = paramsGender.append('gender', this.visits[0].userGender);
-      this.metricsService.getDataMetrics(paramsGender).subscribe(data => {
-        this.dataMetrics = data as Object[];
-        if (!this.userService.isAdmin || (this.userService.isAdmin && this.userParam)) {
-          let params = new HttpParams();
-          this.visits.forEach(visit => {
-            params = params.append('visits[]', String(visit.id));
-          });
-          this.examService.statisticsExam(params).subscribe(exams => {
-            this.exams = exams;
-            this.showGraphic = true;
-          });
-        }
-      });
+      if (!this.userService.isAdmin || (this.userService.isAdmin && this.userParam)) {
+        let params = new HttpParams();
+        this.visits.forEach(visit => {
+          params = params.append('visits[]', String(visit.id));
+        });
+        this.examService.statisticsExam(params).subscribe(exams => {
+          this.exams = exams;
+          this.showGraphic = true;
+        });
+      }
     }
   }
 }

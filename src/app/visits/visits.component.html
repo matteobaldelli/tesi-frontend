@@ -61,7 +61,7 @@
   </ng-template>
   <div class="container" *ngIf="showGraphic">
     <div class="box graph-container">
-      <app-graphic [exams]="exams" [dataMetrics]="dataMetrics"></app-graphic>
+      <app-graphic [exams]="exams" [gender]="visits[0].userGender"></app-graphic>
     </div>
   </div>
 </div>

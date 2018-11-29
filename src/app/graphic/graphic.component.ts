@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 
+import { MetricsService } from '../metrics.service';
 import { HDataService } from '../h-data.service';
 
 import { Exam } from '../exam';
@@ -12,21 +14,30 @@ declare var HGraph: any;
   styleUrls: ['./graphic.component.css']
 })
 export class GraphicComponent implements OnInit, OnChanges {
-  @Input() dataMetrics: Object[];
   @Input() exams: Exam[];
+  @Input() gender: string;
   graph: any;
 
   constructor(
-    private hDataService: HDataService,
+    private metricsService: MetricsService,
+    private hDataService: HDataService
   ) { }
 
   ngOnInit() {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.dataMetrics) {
-      this.hDataService.initialize(this.dataMetrics);
-      this.draw(this.exams);
+    if (changes.gender) {
+      let paramsData = new HttpParams();
+      paramsData = paramsData.append('gender', changes.gender.currentValue);
+      this.metricsService.getDataMetrics(paramsData).subscribe(data => {
+        this.hDataService.initialize(data as Object[]);
+        this.draw(this.exams);
+      });
+    }
+
+    if (changes.exams) {
+      this.draw(changes.exams.currentValue);
     }
   }
 

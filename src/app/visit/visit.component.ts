@@ -26,7 +26,6 @@ export class VisitComponent implements OnInit {
   metricLabel: string;
   metricMin: number;
   metricMax: number;
-  dataMetrics: Object[];
 
   newExam = new FormGroup({
     metric: new FormControl(undefined, Validators.required),
@@ -55,12 +54,7 @@ export class VisitComponent implements OnInit {
       params = params.append('visitId', '' + id);
       this.examService.getExams(params).subscribe(exams => {
         this.exams = exams;
-        let paramsData = new HttpParams();
-        paramsData = paramsData.append('gender', this.visit.userGender);
-        this.metricsService.getDataMetrics(paramsData).subscribe(data => {
-          this.dataMetrics = data as Object[];
-          this.calculateNewMetric();
-        });
+        this.calculateNewMetric();
       });
     });
   }

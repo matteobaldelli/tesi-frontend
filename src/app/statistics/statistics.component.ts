@@ -18,7 +18,6 @@ export class StatisticsComponent implements OnInit {
   searchForm: FormGroup;
   metricsForm: FormGroup;
   metrics: Metric[];
-  dataMetrics: Object[];
   exams: Exam[];
 
   constructor(
@@ -40,12 +39,6 @@ export class StatisticsComponent implements OnInit {
   }
 
   onChangeGender() {
-    const gender = this.searchForm.value.gender;
-    let paramsData = new HttpParams();
-    paramsData = paramsData.append('gender', gender);
-    this.metricsService.getDataMetrics(paramsData).subscribe(data => {
-      this.dataMetrics = data as Object[];
-    });
     this.loadFilter();
     this.onSubmit();
   }
