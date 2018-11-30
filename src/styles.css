@@ -227,6 +227,10 @@ svg.healthscore {
     overflow: scroll;
 }
 
+.items #viz {
+  min-height: 240px;
+}
+
 .list-group {
     display: table;
     flex-direction: inherit;
