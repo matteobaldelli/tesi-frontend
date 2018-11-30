@@ -14,6 +14,8 @@ import { Visit } from '../visit';
 export class GraphicsComponent implements OnInit {
   visits: Visit[];
   gender: string;
+  username: string;
+
   constructor(
     private route: ActivatedRoute,
     private visitService: VisitService
@@ -26,6 +28,7 @@ export class GraphicsComponent implements OnInit {
       params = params.append('userId', queryParams['user']);
       this.visitService.getVisitAndExams(params).subscribe(visits => {
         this.visits = visits;
+        this.username = visits[0].userUsername
       });
     });
   }
