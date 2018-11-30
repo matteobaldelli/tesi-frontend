@@ -12,11 +12,11 @@ import { UsersComponent } from './users/users.component';
 import { GraphicsComponent } from './graphics/graphics.component';
 
 const routes: Routes = [
-  { path: 'visits', component: VisitsComponent, canActivate: [AuthGuard] },
-  { path: 'visit/:id', component: VisitComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'graphics', component: GraphicsComponent },
+  { path: 'visits', component: VisitsComponent, canActivate: [AuthGuard] },
+  { path: 'visit/:id', component: VisitComponent, canActivate: [AuthGuard] },
+  { path: 'graphics', component: GraphicsComponent, canActivate: [AuthGuard], data: {admin: 'true'} },
   { path: 'admin/users', component: UsersComponent, canActivate: [AuthGuard], data: {admin: 'true'} },
   { path: 'admin/params', component: MetricsComponent, canActivate: [AuthGuard], data: {admin: 'true'} },
   { path: 'admin/categories', component: CategoryComponent, canActivate: [AuthGuard], data: {admin: 'true'} },
