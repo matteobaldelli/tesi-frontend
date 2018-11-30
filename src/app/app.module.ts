@@ -25,6 +25,7 @@ import { registerLocaleData } from '@angular/common';
 import localeIt from '@angular/common/locales/it';
 import { UsersComponent } from './users/users.component';
 import { GraphicComponent } from './graphic/graphic.component';
+import { GraphicsComponent } from './graphics/graphics.component';
 
 registerLocaleData(localeIt);
 
@@ -40,7 +41,8 @@ registerLocaleData(localeIt);
     CategoryComponent,
     StatisticsComponent,
     UsersComponent,
-    GraphicComponent
+    GraphicComponent,
+    GraphicsComponent
   ],
   imports: [
     BrowserModule,

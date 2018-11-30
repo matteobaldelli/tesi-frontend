@@ -1,0 +1,4 @@
+<div *ngFor="let visit of visits">
+  {{visit.name}}
+  <app-graphic [exams]="visit.exams" [gender]="gender"></app-graphic>
+</div>

@@ -9,12 +9,14 @@ import { MetricsComponent } from './metrics/metrics.component';
 import { CategoryComponent } from './category/category.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { UsersComponent } from './users/users.component';
+import { GraphicsComponent } from './graphics/graphics.component';
 
 const routes: Routes = [
   { path: 'visits', component: VisitsComponent, canActivate: [AuthGuard] },
   { path: 'visit/:id', component: VisitComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'graphics', component: GraphicsComponent },
   { path: 'admin/users', component: UsersComponent, canActivate: [AuthGuard], data: {admin: 'true'} },
   { path: 'admin/params', component: MetricsComponent, canActivate: [AuthGuard], data: {admin: 'true'} },
   { path: 'admin/categories', component: CategoryComponent, canActivate: [AuthGuard], data: {admin: 'true'} },
