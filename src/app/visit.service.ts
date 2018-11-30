@@ -64,6 +64,13 @@ export class VisitService {
     );
   }
 
+  getVisitAndExams(params: HttpParams): Observable<Visit[]> {
+    return this.http.get<Visit[]>(this.url + '/exams', {params: params}).pipe(
+      tap(visits => this.log('fetched visits')),
+      catchError(this.handleError('getVisitAndExams', []))
+    );
+  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
 import { MetricsService } from '../metrics.service';
@@ -16,7 +16,9 @@ declare var HGraph: any;
 export class GraphicComponent implements OnInit, OnChanges {
   @Input() exams: Exam[];
   @Input() gender: string;
+  @ViewChild('viz') container: ElementRef;
   graph: any;
+  initialize = false;
 
   constructor(
     private metricsService: MetricsService,
@@ -27,16 +29,17 @@ export class GraphicComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.gender) {
+    if (changes.gender && changes.gender.currentValue !== changes.gender.previousValue) {
       let paramsData = new HttpParams();
       paramsData = paramsData.append('gender', changes.gender.currentValue);
       this.metricsService.getDataMetrics(paramsData).subscribe(data => {
         this.hDataService.initialize(data as Object[]);
+        this.initialize = true;
         this.draw(this.exams);
       });
     }
 
-    if (changes.exams) {
+    if (changes.exams && this.initialize) {
       this.draw(changes.exams.currentValue);
     }
   }
@@ -48,7 +51,8 @@ export class GraphicComponent implements OnInit, OnChanges {
     }
 
   if (exams.length >= 3) {
-    const container = document.getElementById('viz');
+    const container = this.container.nativeElement;
+    console.log(container);
     const opts = {
       container: container,
       userdata: {
