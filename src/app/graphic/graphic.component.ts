@@ -52,7 +52,6 @@ export class GraphicComponent implements OnInit, OnChanges {
 
   if (exams.length >= 3) {
     const container = this.container.nativeElement;
-    console.log(container);
     const opts = {
       container: container,
       userdata: {
