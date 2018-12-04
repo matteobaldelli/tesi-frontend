@@ -40,21 +40,46 @@
       </button>
     </div>
   </div>
-  <ng-template #form>
+  <ng-template #create>
     <div class="modal-header">
-      <h4 class="modal-title pull-left">{{titleForm}} visita</h4>
+      <h4 class="modal-title pull-left">Aggiungi visita</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="hideForm()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      <form [formGroup]="visitForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="createForm" (ngSubmit)="onSubmitAdd()">
+        <div class="form-group">
+          <label for="name-add">Nome della visita</label>
+          <input type="text" class="form-control" id="name-add" formControlName="name">
+        </div>
+        <button type="submit" class="btn btn-success pull-right" [disabled]="!createForm.valid">
+          Aggiungi
+        </button>
+      </form>
+    </div>
+  </ng-template>
+  <ng-template #update>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Modifica visita</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="hideForm()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="updateForm" (ngSubmit)="onSubmitUpdate()">
         <div class="form-group">
           <label for="name">Nome della visita</label>
           <input type="text" class="form-control" id="name" formControlName="name">
         </div>
-        <button type="submit" class="btn btn-success pull-right" [disabled]="!visitForm.valid">
-          {{titleForm}}
+      </form>
+      <form [formGroup]="examsForm" (ngSubmit)="onSubmitUpdate()">
+        <div class="form-group" *ngFor="let exam of exams">
+          <label [for]="exam.metricName">{{exam.metricName}}</label>
+          <input type="number" class="form-control" [id]="exam.metricName" [formControlName]="exam.id">
+        </div>
+        <button type="submit" class="btn btn-success pull-right" [disabled]="!updateForm.valid && !examsForm.valid">
+          Modifica
         </button>
       </form>
     </div>
@@ -62,7 +87,7 @@
   <div class="container" *ngIf="showGraphic">
     <div class="box graph-container">
       <h2 class="sub-title">Valori medi delle tue visite</h2>
-      <app-graphic [exams]="exams" [gender]="visits[0].userGender"></app-graphic>
+      <app-graphic [exams]="graphicExams" [gender]="visits[0].userGender"></app-graphic>
     </div>
   </div>
 </div>
