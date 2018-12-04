@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
+import { forkJoin } from 'rxjs';
 
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
@@ -19,17 +20,23 @@ import { Exam } from '../exam';
   styleUrls: ['./visits.component.css']
 })
 export class VisitsComponent implements OnInit {
-  @ViewChild('form')
-  private templateForm: TemplateRef<any>;
+  @ViewChild('create')
+  private createTemplate: TemplateRef<any>;
+  @ViewChild('update')
+  private updateTemplate: TemplateRef<any>;
   showGraphic = false;
   visits: Visit[];
   modalRef: BsModalRef;
-  titleForm: string;
+  graphicExams: Exam[];
   exams: Exam[];
-  visitForm = new FormGroup({
+  createForm = new FormGroup({
+    name: new FormControl('', Validators.required)
+  });
+  updateForm = new FormGroup({
     id: new FormControl({ value: null, disabled: true}),
     name: new FormControl('', Validators.required)
   });
+  examsForm: FormGroup;
   userParam: string;
 
   constructor(
@@ -55,57 +62,74 @@ export class VisitsComponent implements OnInit {
   }
 
   add(): void {
-    this.titleForm = 'Aggiungi';
-    this.modalRef = this.modalService.show(this.templateForm, { keyboard: false });
+    this.modalRef = this.modalService.show(this.createTemplate, { keyboard: false });
   }
 
   edit(category: Category): void {
-    this.titleForm = 'Modifica';
-    this.visitForm.setValue({
+    this.updateForm.setValue({
       id: category.id,
       name: category.name
     });
-    this.modalRef = this.modalService.show(this.templateForm, { keyboard: false });
+    this.examsForm = new FormGroup({});
+    let params = new HttpParams();
+    params = params.append('visitId', String(category.id));
+    this.examService.getExams(params).subscribe(exams => {
+      this.exams = exams;
+      exams.forEach(item => {
+        this.examsForm.addControl(String(item.id), new FormControl(item.value, [Validators.required]));
+      });
+      this.modalRef = this.modalService.show(this.updateTemplate, { keyboard: false });
+    });
   }
 
-  onSubmit(): void {
-    this.visitForm.disable();
+  onSubmitAdd(): void {
+    this.createForm.disable();
     const visit = {
-      id: this.visitForm.value.id,
-      name: this.visitForm.value.name
+      name: this.createForm.value.name
     } as Visit;
-    if (visit.id) {
-      this.onSubmitUpdate(visit);
-    } else {
-      this.onSubmitAdd(visit);
-    }
-  }
 
-  private onSubmitAdd(visit: Visit): void {
     this.visitService.addVisit(visit).subscribe(
       newVisit => {
         this.visits.push(newVisit);
       },
       error => {},
       () => {
-        this.visitForm.enable();
+        this.createForm.enable();
         this.hideForm();
       }
     );
   }
 
-   private onSubmitUpdate(visit: Visit): void {
-    this.visitService.updateVisit(visit).subscribe(
-      updateVisit => {
+   onSubmitUpdate(): void {
+    this.updateForm.disable();
+    this.examsForm.disable();
+    const visit = {
+      id: this.updateForm.value.id,
+      name: this.updateForm.value.name
+    } as Visit;
+
+    const observableExams = [];
+    Object.keys(this.examsForm.value).forEach(key => {
+      const exam = {
+        id: Number(key),
+        value: this.examsForm.value[key]
+      } as Exam;
+      observableExams.push(this.examService.updateExam(exam));
+    });
+    forkJoin([
+      this.visitService.updateVisit(visit),
+      ...observableExams
+    ]).subscribe(results => {
+        const updateVisit = results[0];
         const index = this.visits.findIndex(c => c.id === updateVisit.id);
         this.visits[index] = updateVisit;
-      },
+    },
       error => {},
       () => {
-        this.visitForm.enable();
+        this.updateForm.enable();
+        this.examsForm.enable();
         this.hideForm();
-      }
-    );
+      });
   }
 
   delete(visit: Visit): void {
@@ -116,7 +140,8 @@ export class VisitsComponent implements OnInit {
   }
 
   hideForm(): void {
-    this.visitForm.reset();
+    this.createForm.reset();
+    this.updateForm.reset();
     this.modalRef.hide();
   }
 
@@ -128,7 +153,7 @@ export class VisitsComponent implements OnInit {
           params = params.append('visits[]', String(visit.id));
         });
         this.examService.statisticsExam(params).subscribe(exams => {
-          this.exams = exams;
+          this.graphicExams = exams;
           this.showGraphic = true;
         });
       }

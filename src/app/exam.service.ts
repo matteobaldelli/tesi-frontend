@@ -5,6 +5,7 @@ import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../environments/environment';
+import {Visit} from './visit';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -36,6 +37,13 @@ export class ExamService {
     return this.http.post<Exam>(this.url, exam, httpOptions).pipe(
       tap((newExam: Exam) => this.log(`added exam w/ id=${newExam.id}`)),
       catchError(this.handleError<Exam>('addVisit'))
+    );
+  }
+
+  updateExam(exam: Exam): Observable<Exam> {
+    return this.http.put(this.url + '/' + exam.id, exam, httpOptions).pipe(
+      tap(_ => this.log(`updated exam id=${exam.id}`)),
+      catchError(this.handleError<any>('updateExam'))
     );
   }
 
