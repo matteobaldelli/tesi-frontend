@@ -26,6 +26,15 @@ body {
     font-size: 35px;
 }
 
+.sub-title {
+    text-align: center;
+    margin: 20px 0 20px 0;
+    color: #FFF;
+    text-transform: uppercase;
+    font-weight: 200;
+    font-size: 20px;
+}
+
 .form-control {
     margin-bottom: 15px;
 }
@@ -228,7 +237,7 @@ svg.healthscore {
 }
 
 .items #viz {
-  min-height: 240px;
+  min-height: 300px;
 }
 
 .list-group {
