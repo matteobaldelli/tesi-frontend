@@ -1,7 +1,7 @@
 <h1 class="page-title">Visite di {{username}}</h1>
 <section id="main">
   <div class="row">
-    <div class="col-md-4" *ngFor="let visit of visits">
+    <div class="col-md-6 col-lg-4" *ngFor="let visit of visits">
       <div class="box items">
         <h2 class="sub-title">Grafico {{visit.name}}</h2>
         <h2 class="sub-title">Data: {{visit.dateCreated | date:'longDate'}}</h2>
