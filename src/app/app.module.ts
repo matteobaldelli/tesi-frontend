@@ -26,6 +26,7 @@ import localeIt from '@angular/common/locales/it';
 import { UsersComponent } from './users/users.component';
 import { GraphicComponent } from './graphic/graphic.component';
 import { GraphicsComponent } from './graphics/graphics.component';
+import { LowercaseDirective } from './lowercase.directive';
 
 registerLocaleData(localeIt);
 
@@ -42,7 +43,8 @@ registerLocaleData(localeIt);
     StatisticsComponent,
     UsersComponent,
     GraphicComponent,
-    GraphicsComponent
+    GraphicsComponent,
+    LowercaseDirective
   ],
   imports: [
     BrowserModule,
