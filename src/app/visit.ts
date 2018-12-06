@@ -6,5 +6,6 @@ export class Visit {
   userUsername?: string;
   userGender?: string;
   dateCreated?: Date;
+  dateModified?: Date;
   exams?: Exam[];
 }
