@@ -19,6 +19,7 @@ export class StatisticsComponent implements OnInit {
   metricsForm: FormGroup;
   metrics: Metric[];
   exams: Exam[];
+  fetching = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,6 +45,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   onSubmit() {
+    this.fetching = true;
     let params = new HttpParams();
     params = params.append('gender', this.searchForm.value.gender);
     params = params.append('age', this.searchForm.value.age);
@@ -52,7 +54,9 @@ export class StatisticsComponent implements OnInit {
     });
     this.examService.statisticsExam(params).subscribe(exams => {
         this.exams = exams;
-    });
+    },
+      error => {},
+      () => this.fetching = false);
   }
 
   private loadFilter(): void {

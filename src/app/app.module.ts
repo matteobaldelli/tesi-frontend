@@ -27,6 +27,7 @@ import { UsersComponent } from './users/users.component';
 import { GraphicComponent } from './graphic/graphic.component';
 import { GraphicsComponent } from './graphics/graphics.component';
 import { LowercaseDirective } from './lowercase.directive';
+import { LoaderComponent } from './loader/loader.component';
 
 registerLocaleData(localeIt);
 
@@ -44,7 +45,8 @@ registerLocaleData(localeIt);
     UsersComponent,
     GraphicComponent,
     GraphicsComponent,
-    LowercaseDirective
+    LowercaseDirective,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
