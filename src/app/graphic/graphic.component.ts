@@ -29,7 +29,7 @@ export class GraphicComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.gender && changes.gender.currentValue !== changes.gender.previousValue) {
+    if (changes.gender && changes.gender.currentValue && changes.gender.currentValue !== changes.gender.previousValue) {
       let paramsData = new HttpParams();
       paramsData = paramsData.append('gender', changes.gender.currentValue);
       this.metricsService.getDataMetrics(paramsData).subscribe(data => {
@@ -43,7 +43,6 @@ export class GraphicComponent implements OnInit, OnChanges {
       this.draw(changes.exams.currentValue);
     }
   }
-
 
   private draw(exams: Exam[]): void {
   if (this.graph !== undefined) {
