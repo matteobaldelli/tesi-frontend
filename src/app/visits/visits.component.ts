@@ -116,13 +116,11 @@ export class VisitsComponent implements OnInit {
       } as Exam;
       observableExams.push(this.examService.updateExam(exam));
     });
-    forkJoin([
-      this.visitService.updateVisit(visit),
-      ...observableExams
-    ]).subscribe(results => {
-        const updateVisit = results[0];
+    forkJoin(observableExams).subscribe(results => {
+      this.visitService.updateVisit(visit).subscribe(updateVisit => {
         const index = this.visits.findIndex(c => c.id === updateVisit.id);
         this.visits[index] = updateVisit;
+      });
     },
       error => {},
       () => {

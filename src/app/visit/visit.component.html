@@ -25,7 +25,6 @@
     </div>
     <div class="col-lg-9">
       <div class="box">
-        <h2 class="sub-title" *ngIf="visit">Data: {{visit.dateCreated | date:'longDate'}}</h2>
         <app-graphic [exams]="exams" [gender]="visit?.userGender"></app-graphic>
       </div>
     </div>

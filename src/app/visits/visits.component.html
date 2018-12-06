@@ -6,7 +6,7 @@
         <table class="list-group" style="width:100%">
           <tr>
             <th>Nome</th>
-            <th>Data Creazione</th>
+            <th>Data ultima modifica</th>
             <th class="text-left" *ngIf="userService.isAdmin">Utente</th>
             <th>Azioni</th>
           </tr>
@@ -15,7 +15,7 @@
               {{visit.name}}
             </td>
             <td>
-              {{visit.dateCreated | date:'longDate'}}
+              {{visit.dateModified | date:'longDate'}}
             </td>
             <td class="text-left" *ngIf="userService.isAdmin">
               <span>{{visit.userUsername}}</span>
