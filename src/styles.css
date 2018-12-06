@@ -239,7 +239,6 @@ svg.healthscore {
 
 #viz {
   min-height: 680px;
-  overflow: scroll;
 }
 
 .items #viz {
