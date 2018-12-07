@@ -38,6 +38,7 @@ export class VisitsComponent implements OnInit {
   });
   examsForm: FormGroup;
   userParam: string;
+  fetching = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -146,13 +147,15 @@ export class VisitsComponent implements OnInit {
   private getAverageData(): void {
     if (this.visits.length) {
       if (!this.userService.isAdmin || (this.userService.isAdmin && this.userParam)) {
+        this.fetching = true;
+        this.showGraphic = true;
         let params = new HttpParams();
         this.visits.forEach(visit => {
           params = params.append('visits[]', String(visit.id));
         });
         this.examService.statisticsExam(params).subscribe(exams => {
           this.graphicExams = exams;
-          this.showGraphic = true;
+          this.fetching = false;
         });
       }
     }
