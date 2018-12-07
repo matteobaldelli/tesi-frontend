@@ -87,7 +87,8 @@
   <div class="container" *ngIf="showGraphic">
     <div class="box graph-container">
       <h2 class="sub-title">Valori medi delle tue visite</h2>
-      <app-graphic [exams]="graphicExams" [gender]="visits[0].userGender"></app-graphic>
+      <app-loader [fetching]="fetching"></app-loader>
+      <app-graphic *ngIf="!fetching" [exams]="graphicExams" [gender]="visits[0].userGender"></app-graphic>
     </div>
   </div>
 </div>

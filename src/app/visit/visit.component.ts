@@ -26,6 +26,7 @@ export class VisitComponent implements OnInit {
   metricLabel: string;
   metricMin: number;
   metricMax: number;
+  fetching: boolean;
 
   newExam = new FormGroup({
     metric: new FormControl(undefined, Validators.required),
@@ -42,6 +43,7 @@ export class VisitComponent implements OnInit {
 ) {}
 
   ngOnInit() {
+    this.fetching = true;
     this.exams = [];
     this.newMetrics = [];
     this.metricLabel = '';
@@ -55,7 +57,9 @@ export class VisitComponent implements OnInit {
       this.examService.getExams(params).subscribe(exams => {
         this.exams = exams;
         this.calculateNewMetric();
-      });
+      },
+        error => {},
+        () => this.fetching = false);
     });
   }
 

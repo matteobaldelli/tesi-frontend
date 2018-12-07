@@ -25,7 +25,8 @@
     </div>
     <div class="col-lg-9">
       <div class="box">
-        <app-graphic [exams]="exams" [gender]="visit?.userGender"></app-graphic>
+        <app-loader [fetching]="fetching"></app-loader>
+        <app-graphic *ngIf="!fetching" [exams]="exams" [gender]="visit?.userGender"></app-graphic>
       </div>
     </div>
   </div>
