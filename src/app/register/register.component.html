@@ -15,6 +15,16 @@
             </div>
           </div>
           <div class="form-group">
+            <label for="register-email">Email</label>
+            <input id="register-email" type="email" formControlName="email" class="form-control" appLowercase
+                   [ngClass]="{'is-invalid': registerForm.get('email').errors && registerForm.get('email').touched}"
+            />
+            <div *ngIf="registerForm.get('email').errors && registerForm.get('email').touched" class="invalid-feedback">
+              <div *ngIf="registerForm.get('email').hasError('required')">Email obbligatorio</div>
+              <div *ngIf="registerForm.get('email').hasError('email')">Email non valida</div>
+            </div>
+          </div>
+          <div class="form-group">
             <label for="register-password">Password</label>
             <input id="register-password" type="password" formControlName="password" class="form-control"
                    [ngClass]="{'is-invalid': registerForm.get('password').errors && registerForm.get('password').touched}"
