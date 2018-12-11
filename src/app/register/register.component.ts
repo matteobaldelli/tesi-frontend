@@ -29,6 +29,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.pattern(/^\S*$/)]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       gender: ['', Validators.required],
       birthDate: ['', Validators.required]
@@ -48,6 +49,7 @@ export class RegisterComponent implements OnInit {
 
     const user = {
       username: this.registerForm.value.username,
+      email: this.registerForm.value.email,
       gender: this.registerForm.value.gender,
       password: this.registerForm.value.password,
       birthDate: this.registerForm.value.birthDate
