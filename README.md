@@ -1,27 +1,35 @@
-# FrontendTesi
+# Frontend Degree
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.4.
+This repository is about my frontend project which I have created for my bachelor's degree. It focuses on an evaluation system of organization and management which makes medical datas more understandable and easier to organize.
 
-## Development server
+## Getting Started
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-## Code scaffolding
+### Prerequisites
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To run this project you must have installed these programs:
+* [npm](https://github.com/npm/cli)
+* [angular-cli](https://github.com/angular/angular-cli)
 
-## Build
+### Installing and serve
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```
+git clone https://github.com/matteobaldelli/tesi-frontend.git
+cd tesi-frontend
+npm install
+ng serve
+```
 
-## Running unit tests
+Development environment call the API in localhost, for more information see [backend degree project](https://github.com/matteobaldelli/tesi-api)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Built With
 
-## Running end-to-end tests
+* [Angular](https://github.com/angular/angular)
+* [Bootstrap](https://github.com/twbs/bootstrap)
+* [hGraph](https://github.com/goinvo/hGraph)
+* [ng2-nouislider](https://github.com/tb/ng2-nouislider)
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## License
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+This project is licensed under the Apache License 2.0 - see the [LICENSE.md](LICENSE.md) file for details
