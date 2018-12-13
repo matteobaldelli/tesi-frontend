@@ -44,6 +44,52 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "production-en": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "outputPath": "dist/frontend-tesi/en",
+              "baseHref": "/en/",
+			        "i18nFile": "src/locale/messages.en.xlf",
+			        "i18nFormat": "xlf",
+			        "i18nLocale": "en",
+			        "i18nMissingTranslation": "error"
+            },
+            "production-it": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "outputPath": "dist/frontend-tesi/it",
+              "baseHref": "/it/",
+			        "i18nFile": "src/locale/messages.it.xlf",
+			        "i18nFormat": "xlf",
+			        "i18nLocale": "it",
+			        "i18nMissingTranslation": "error"
             }
           }
         },
@@ -55,7 +101,13 @@
           "configurations": {
             "production": {
               "browserTarget": "frontend-tesi:build:production"
-            }
+            },
+            "en": {
+			        "browserTarget": "frontend-tesi:build:production-en"
+		        },
+		        "it": {
+			        "browserTarget": "frontend-tesi:build:production-it"
+		        }
           }
         },
         "extract-i18n": {
